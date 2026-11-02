@@ -1059,14 +1059,20 @@ export const curriculum: LearningUnit[] = [
         bi("x=2 dan f(2)=1, jadi (2,1).", "x=2 and f(2)=1, so (2,1)."),
       ),
       q(
-        bi("Nilai maksimum f(x)=−x²+6x?", "Maximum value of f(x)=−x²+6x?"),
+        bi(
+          "Diketahui f(x)=−x²+6x untuk x real. Cari x di titik puncak, lalu tentukan nilai maksimum f(x).",
+          "Given f(x)=−x²+6x for real x, find x at the vertex, then determine the maximum value of f(x).",
+        ),
         ["3", "6", "9", "12"],
         2,
         bi(
-          "Turunan −2x+6 nol di titik puncak.",
-          "The derivative −2x+6 is zero at the vertex.",
+          "Nilai x perlu dicari, bukan diberikan. Selesaikan f′(x)=0, lalu masukkan x tersebut ke fungsi awal f(x).",
+          "You need to find x; it is not given. Solve f′(x)=0, then substitute that x into the original function f(x).",
         ),
-        bi("x=3, f(3)=−9+18=9.", "x=3, f(3)=−9+18=9."),
+        bi(
+          "Cari x di puncak: f′(x)=−2x+6=0 → x=3. Parabola terbuka ke bawah, jadi puncaknya maksimum. Masukkan x=3 ke fungsi awal: f(3)=−(3)²+6(3)=−9+18=9. Jadi nilai maksimum f(x) adalah 9, sedangkan 3 adalah nilai x-nya.",
+          "Find x at the vertex: f′(x)=−2x+6=0 → x=3. The parabola opens downward, so its vertex is a maximum. Substitute x=3 into the original function: f(3)=−(3)²+6(3)=−9+18=9. The maximum value of f(x) is 9; 3 is the x-value.",
+        ),
       ),
       q(
         bi(
