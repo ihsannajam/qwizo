@@ -1,8 +1,10 @@
-# OpenAI generatif untuk Qwizo
+# OpenAI API key opsional untuk Qwizo
+
+Sejak v0.4, jalur utama tersedia melalui tombol **Lanjutkan dengan ChatGPT**, tanpa API key untuk akun/paket yang memenuhi syarat. Lihat [chatgpt-sign-in.md](chatgpt-sign-in.md). Dokumen ini menjelaskan pilihan API key dengan tagihan API terpisah. Pemilihan API harus eksplisit pada Pengaturan → Pilihan sumber AI; tidak ada fallback otomatis.
 
 ## Status implementasi
 
-Server OpenAI Responses API, mode chat AI di Tutor Qwi, generator tiga soal per materi, dan penilaian latihan AI di server telah dibuat. Mode lokal tetap tersedia tanpa key. Koneksi ke akun/model nyata belum diuji karena API key belum diberikan melalui konfigurasi lokal. Tidak ada token login ChatGPT, cookie, atau kredensial GitHub yang dipakai sebagai kredensial AI.
+Server OpenAI Responses API, mode chat AI di Tutor Qwi, generator tiga soal per materi, dan penilaian latihan AI di server telah dibuat. Mode lokal tetap tersedia tanpa key. Koneksi ke akun/model nyata belum diuji karena API key belum diberikan melalui konfigurasi lokal. Jalur API key tidak memakai cookie/token login browser maupun kredensial GitHub. Jalur ChatGPT terpisah memakai grant OAuth resmi, disimpan hanya di server.
 
 ## Aktivasi oleh pemilik akun
 
@@ -10,7 +12,7 @@ Server OpenAI Responses API, mode chat AI di Tutor Qwi, generator tiga soal per 
 2. Pastikan organisasi API punya kuota. Pengguna Pro/Business yang memenuhi syarat dapat menautkan manfaat kredit API: https://developers.openai.com/api/docs/guides/chatgpt-api-credits . Kelayakan, saldo dan aktivasi manfaat akun ini belum diverifikasi.
 3. Isi `OPENAI_API_KEY` di `.env` lokal. Model awal `gpt-4.1-mini`, dapat diganti dengan model berakses untuk projectmu yang mendukung Responses API + Structured Outputs.
 4. Jalankan `npm run ai`, lalu `npm run dev` di terminal kedua. Buka http://localhost:5174.
-5. Pada halaman materi, buka Tutor Qwi → AI generatif. Minta penjelasan, tanyakan hubungan konsep, atau minta contoh baru. Pada materi yang sama, pilih kesulitan lalu Buat 3 soal AI untuk latihan bebas.
+5. Di Pengaturan, pilih Pilihan sumber AI → Gunakan API key (tagihan API). Pada halaman materi, buka Tutor Qwi → AI generatif. Minta penjelasan, tanyakan hubungan konsep, atau minta contoh baru. Pada materi yang sama, pilih kesulitan lalu Buat 3 soal AI untuk latihan bebas.
 
 Server `.env` tidak menggunakan awalan `VITE_`, tidak disalin ke `dist`, dan diabaikan Git. Di komputer lain, buat `.env` sendiri; GitHub hanya membawa `.env.example`. Jangan menaruh key dalam browser/localStorage atau melakukan commit `.env`.
 
@@ -41,7 +43,7 @@ Key jawaban latihan AI disimpan dalam memori server selama 20 menit. ID percobaa
 
 ## Pemakaian dan error
 
-Default lokal: maksimal dua permintaan model bersamaan, 20 per 10 menit dan 100 per hari UTC per proses. `AI_DAILY_REQUEST_LIMIT` bisa diatur di `.env`; restart menghapus penghitung sehingga bukan pengganti limit/anggaran project di API Platform. Token output dibatasi 900 untuk tutor dan 2600 untuk generator. Tidak ada retry otomatis berbayar.
+Default lokal: maksimal dua permintaan model bersamaan, 20 per 10 menit dan 100 per hari UTC per proses. `AI_DAILY_REQUEST_LIMIT` bisa diatur di `.env`; restart menghapus penghitung sehingga bukan pengganti limit/anggaran project di API Platform. Pada jalur API key, token output dibatasi 900 untuk tutor dan 2600 untuk generator. Jalur ChatGPT tidak mengirim parameter ini. Tidak ada retry otomatis berbayar.
 
 Tidak ada fallback AI palsu: mode lokal diberi label terpisah. Saat server mati, API key kosong/tidak valid, kuota provider habis, timeout, refusal atau JSON tidak valid, UI menampilkan pesan dan tetap menyediakan alur belajar lokal. Konfigurasi key terisi bukan bukti key valid/saldo cukup.
 
@@ -60,7 +62,7 @@ Build frontend/server telah diverifikasi. Tes browser interaktif masih terhalang
 - Structured Outputs: https://developers.openai.com/api/docs/guides/structured-outputs
 - Model awal: https://developers.openai.com/api/docs/models/gpt-4.1-mini
 - Kredit API pelanggan yang memenuhi syarat: https://developers.openai.com/api/docs/guides/chatgpt-api-credits
-- Alternatif Sign in with ChatGPT: https://developers.openai.com/siwc/token-sharing-open-source (jalur integrasi lain, belum diterapkan dalam versi ini)
+- Alternatif Sign in with ChatGPT: https://developers.openai.com/siwc/token-sharing-open-source (sudah diterapkan pada v0.4; lihat panduan ChatGPT)
 
 ## Halaman utama port 5075 dan fresh clone
 

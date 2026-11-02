@@ -129,7 +129,7 @@ export function LearningSession({
             ? stage.current?.querySelector(".session-exit")
             : stage.current;
           const items = root?.querySelectorAll<HTMLElement>(
-            "button:not(:disabled),input,textarea,a[href]",
+            "button:not(:disabled),input,textarea,a[href],select:not(:disabled)",
           );
           if (!items?.length) return;
           const first = items[0],

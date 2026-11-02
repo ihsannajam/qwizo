@@ -1,6 +1,7 @@
 node_modules/
 dist/
 dist-server/
+.qwizo-auth/
 .npm-cache/
 tmp/
 *.tsbuildinfo

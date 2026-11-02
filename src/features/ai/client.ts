@@ -2,6 +2,24 @@ export interface AiStatus {
   ready: boolean;
   provider: string;
   model: string;
+  authMode?: "chatgpt" | "api-key";
+  keyConfigured?: boolean;
+  errorCode?: string;
+  chatgpt?: {
+    activeId: string | null;
+    connected: boolean;
+    planEnabled: boolean;
+    notice: string;
+    models: { slug: string; name: string }[];
+    accounts: {
+      id: string;
+      name: string;
+      email: string;
+      connected: boolean;
+      planEnabled: boolean;
+      needsLogin: boolean;
+    }[];
+  };
 }
 export interface PracticePacket {
   attemptId: string;
@@ -60,6 +78,46 @@ export async function aiRequest<T>(
 export function aiErrorMessage(error: unknown, language: "id" | "en") {
   const code = error instanceof AiClientError ? error.code : "ai_unavailable";
   const messages: Record<string, [string, string]> = {
+    chatgpt_sign_in_required: [
+      "Masuk kembali dengan ChatGPT untuk melanjutkan.",
+      "Sign in again with ChatGPT to continue.",
+    ],
+    chatgpt_plan_unavailable: [
+      "Pemakaian paket ChatGPT belum diizinkan atau tidak tersedia untuk akun ini. Periksa izin dan paket akunmu.",
+      "ChatGPT plan usage is not authorized or available for this account. Check its permissions and plan.",
+    ],
+    chatgpt_usage_limit: [
+      "Batas pemakaian paket ChatGPT tercapai. Kelola pemakaian di ChatGPT atau tunggu batasnya direset.",
+      "Your ChatGPT plan usage limit was reached. Manage usage in ChatGPT or wait for the limit to reset.",
+    ],
+    chatgpt_connection_unavailable: [
+      "Koneksi resmi ChatGPT belum dapat dihubungi. Coba lagi nanti.",
+      "The ChatGPT connection is unavailable. Please try again later.",
+    ],
+    chatgpt_models_unavailable: [
+      "Daftar model akun belum dapat dimuat. Coba perbarui koneksi.",
+      "Your account’s model list could not be loaded. Try refreshing the connection.",
+    ],
+    chatgpt_invalid_identity: [
+      "Hasil login belum dapat diverifikasi. Mulai login baru melalui tombol ChatGPT.",
+      "The sign-in result could not be verified. Start a fresh ChatGPT sign-in.",
+    ],
+    chatgpt_storage_locked: [
+      "Koneksi lokal tidak dapat dibuka oleh akun komputer ini. Jalankan Qwizo dengan akun Windows yang menyimpan koneksinya.",
+      "The local connection cannot be opened by this computer account. Run Qwizo as the Windows user who saved it.",
+    ],
+    chatgpt_stream_incomplete: [
+      "Jawaban ChatGPT terputus sebelum selesai. Coba lagi; tidak ada hasil yang dinilai.",
+      "The ChatGPT response ended before completion. Try again; no result was graded.",
+    ],
+    chatgpt_request_unavailable: [
+      "Permintaan ini belum didukung oleh akun/model ChatGPT yang dipilih. Coba model lain dari daftar akunmu.",
+      "This request is not supported by the selected ChatGPT account or model. Try another model from your account’s list.",
+    ],
+    chatgpt_account_changed: [
+      "Akun ChatGPT berubah. Perbarui koneksi lalu coba lagi.",
+      "The ChatGPT account changed. Refresh the connection and try again.",
+    ],
     offline: [
       "AI belum dapat dihubungi. Coba lagi nanti; panduan lokal tetap tersedia.",
       "AI cannot be reached. Try again later; the local guide is still available.",

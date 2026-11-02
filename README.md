@@ -1,6 +1,6 @@
-# Qwizo! — MVP + AI Server v0.3
+# Qwizo! — MVP + ChatGPT v0.4
 
-Petualangan belajar Matematika dengan World Map 2.5D, 24 materi, 72 soal, tutor Qwi terstruktur, dan arena Penjaga Kristal. React + TypeScript strict + Vite + Tailwind + React Router + Zustand + Motion. Progres inti disimpan lokal pada browser dan tetap dapat dimainkan tanpa kunci API. Mode AI opsional memakai server Node.js dan OpenAI Responses API.
+Petualangan belajar Matematika dengan World Map 2.5D, 24 materi, 72 soal, tutor Qwi terstruktur, dan arena Penjaga Kristal. React + TypeScript strict + Vite + Tailwind + React Router + Zustand + Motion. Progres inti disimpan lokal pada browser dan tetap dapat dimainkan tanpa kunci API. Mode AI opsional memakai server Node.js, login resmi ChatGPT, dan OpenAI Responses API.
 
 ## Menjalankan
 
@@ -99,7 +99,9 @@ src/
     TutorPanel.tsx / tutor.ts      Tutor terstruktur dan aturan petunjuk
     QuestList.tsx / useProgress.ts Misi dan statistik pemain
     learning.css                  Tampilan belajar dan arena
+  features/ai/                    Koneksi ChatGPT, status AI, latihan generatif
   i18n/                           Terjemahan UI dan materi dasar
+server/chatgpt/                   OAuth, vault, akun/model dan streaming paket
 scripts/
   check-trail.mjs                 Rute Qwi dan terjemahan materi dasar
   check-mvp.mjs / mvp.test.tsx     Pengujian progres, tutor, sesi dan render
@@ -108,43 +110,23 @@ public/assets/                    Sprite, peta, maskot dan logo lokal
 
 ## Validasi dan batasan
 
-`npm test` memeriksa 36 perjalanan Qwi, kelengkapan terjemahan 24 materi, serta 15 kelompok pemeriksaan MVP: 72 soal, transisi sesi, tutor sebelum/sesudah menjawab, migrasi, penyimpanan, kelulusan, unlock, reward ganda, mastery, level, misi, streak dan kemenangan/kekalahan boss. Komponen 24 materi, topik, tutor dan arena dirender melalui server untuk memeriksa error runtime awal.
+`npm test` memeriksa 36 perjalanan Qwi, kelengkapan terjemahan 24 materi, serta 15 kelompok pemeriksaan MVP: 72 soal, transisi sesi, tutor sebelum/sesudah menjawab, migrasi, penyimpanan, kelulusan, unlock, reward ganda, mastery, level, misi, streak dan kemenangan/kekalahan boss. Tambahan pengujian mencakup 14 kelompok AI/server serta 14 kelompok OAuth ChatGPT, sesi, JWT, streaming dan penyimpanan terlindungi dengan endpoint tiruan. Komponen 24 materi, topik, tutor dan arena dirender melalui server untuk memeriksa error runtime awal.
 
-Build TypeScript/Vite diverifikasi. **Pengujian browser interaktif dan inspeksi visual pembaruan v0.3 belum dapat dilakukan karena akses browser lokal dinonaktifkan di pengaturan Work.** Screenshot lama di `docs/screenshots/` adalah referensi versi sebelumnya, bukan bukti pengujian v0.3.
+Build TypeScript/Vite diverifikasi. **Pengujian browser interaktif dan inspeksi visual pembaruan v0.4 belum dapat dilakukan karena akses browser lokal dinonaktifkan di pengaturan Work.** Screenshot lama di `docs/screenshots/` adalah referensi versi sebelumnya, bukan bukti pengujian v0.4.
 
-Materi merupakan jalur fondasi Matematika enam topik, belum silabus kelas 12/UTBK yang telah direview guru. Backend akun/progres, autentikasi nyata, model 3D penuh, kuis adaptif, audio, sembilan pulau lain, deployment publik dan pengujian perangkat sentuh fisik masih tahap lanjutan. Integrasi AI telah disiapkan, tetapi koneksi model nyata memerlukan API key dan kuota akun pemilik.
+Materi merupakan jalur fondasi Matematika enam topik, belum silabus kelas 12/UTBK yang telah direview guru. Backend akun/progres, autentikasi nyata, model 3D penuh, kuis adaptif, audio, sembilan pulau lain, deployment publik dan pengujian perangkat sentuh fisik masih tahap lanjutan. Integrasi AI mendukung login resmi ChatGPT atau API key opsional. Koneksi model nyata masih memerlukan login/persetujuan dan kuota akun pemilik.
 
 Keputusan dan checklist uji manual: [docs/mvp-learning.md](docs/mvp-learning.md). Referensi historis: [docs/visual-update.md](docs/visual-update.md), [docs/game-ui-update.md](docs/game-ui-update.md), [docs/language-and-trail.md](docs/language-and-trail.md). Catatan Sprint 1 bersifat historis; README ini menjelaskan perilaku terbaru.
 
-## Mengaktifkan AI generatif
+## Mengaktifkan AI dengan ChatGPT
 
-1. Masuk ke [OpenAI API Platform](https://platform.openai.com/api-keys) dengan akunmu. Buat project/API key dan pastikan ada kuota API aktif. Akun ChatGPT dapat memakai email yang sama, tetapi cookie/token login ChatGPT bukan API key. Paket Pro/Business yang memenuhi syarat dapat mengaktifkan manfaat [kredit API](https://developers.openai.com/api/docs/guides/chatgpt-api-credits).
-2. Salin `.env.example` menjadi `.env`, isi `OPENAI_API_KEY` secara lokal. Jangan kirim key lewat chat, jangan beri awalan `VITE_`, dan jangan commit `.env`. Model awal `gpt-4.1-mini` dapat diganti dengan model yang tersedia untuk projectmu dan mendukung Structured Outputs.
-3. Jalankan server AI dan frontend pada dua terminal:
+Jalankan `npm start`, buka http://127.0.0.1:5075, lalu **Pengaturan → Lanjutkan dengan ChatGPT**. Masuk dan periksa persetujuan pada halaman resmi OpenAI. Setelah kembali, pilih model akunmu dan gunakan Tutor Qwi atau pembuat tiga soal latihan. Tidak perlu mengisi API key untuk jalur ini.
 
-```powershell
-# Terminal 1
-npm run ai
-```
+Pemakaian mengikuti kelayakan, izin dan kuota paket ChatGPT; login tidak menjamin akses inferensi. Jalur ini ditujukan untuk aplikasi lokal pribadi. Tidak ada perpindahan otomatis ke API berbayar. Jika key lama tersedia, API key hanya dipakai setelah dipilih secara eksplisit pada Pilihan sumber AI, dengan tagihan API terpisah.
 
-```powershell
-# Terminal 2
-npm run dev
-```
+Koneksi disimpan hanya di server dalam folder `.qwizo-auth/` yang diabaikan Git; Windows menggunakan DPAPI CurrentUser. Pada perangkat lain, masuk lagi melalui tombol ChatGPT. Token tidak perlu dikirim ke chat atau disalin dari akun Codex. Progres belajar masih tersimpan per browser.
 
-Buka http://localhost:5174. Pada materi, buka Tutor Qwi dan pilih **AI generatif**, atau gulir ke **Tantangan baru dari AI** untuk membuat tiga soal. Jika key belum diisi/server belum berjalan, mode lokal dan kuis utama tetap tersedia. Sesudah mengubah `.env`, mulai ulang server AI dan buka ulang panel/halaman.
-
-Untuk menjalankan frontend dan AI dengan satu server lokal (build otomatis):
-
-```powershell
-npm start
-```
-
-Buka http://127.0.0.1:5075. Server melayani frontend hasil build sekaligus API. Server hanya mendengarkan loopback; integrasi ini belum ditujukan sebagai API publik tanpa autentikasi. Di komputer lain, `.env` harus diisi sendiri karena key tidak ikut GitHub.
-
-Latihan AI merupakan latihan bebas tanpa XP/unlock. Jawaban benar disimpan sementara di server dan baru dikirim pada hasil penilaian. Pemeriksaan format tidak menjamin kebenaran matematika; tetap perlu review konten. Percobaan kedaluwarsa setelah 20 menit atau ketika server dimulai ulang.
-
-Batas lokal awal: 100 permintaan model per hari UTC per proses, 20 per 10 menit, maksimum dua bersamaan. Batas proses hilang saat restart; tetapkan juga anggaran project di API Platform. Semua pengujian AI memakai provider tiruan tanpa biaya; API nyata dan pemeriksaan UI browser belum diverifikasi. Detail: [docs/ai-setup.md](docs/ai-setup.md).
+Latihan AI tidak menambah XP/unlock. Jawaban disimpan sementara di server selama 20 menit; hasil AI tetap perlu ditinjau. Batas awal aplikasi: dua permintaan bersamaan, 20 per 10 menit dan 100 per hari UTC per proses. Tes memakai endpoint tiruan; **login dan inferensi akun sungguhan belum diverifikasi**. Panduan lengkap: [docs/chatgpt-sign-in.md](docs/chatgpt-sign-in.md). Jalur API key opsional: [docs/ai-setup.md](docs/ai-setup.md).
 
 ## Peta Matematika fullscreen dan suasana hidup
 

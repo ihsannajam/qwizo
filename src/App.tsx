@@ -1,5 +1,6 @@
 import { useI18n } from "./i18n/useI18n";
 import { LanguageToggle } from "./i18n/LanguageToggle";
+import { ChatgptNotice } from "./features/ai/ChatgptNotice";
 import { IslandTravelProvider } from "./features/navigation/IslandTravel";
 import { useIslandTravel } from "./features/navigation/travel-context";
 import { useEffect, useState } from "react";
@@ -100,6 +101,7 @@ export default function App() {
     <MotionConfig reducedMotion={reduced ? "always" : "user"}>
       <div className={reduced ? "reduce-motion" : undefined}>
         <IslandTravelProvider>
+          <ChatgptNotice />
           <Routes>
             <Route
               path="/login"

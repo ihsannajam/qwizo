@@ -157,3 +157,158 @@
     flex: 1;
   }
 }
+.ai-connection {
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid #d6c4eb;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f4edff, #fff8eb);
+  color: #4d3869;
+}
+.ai-connection > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ai-connection > header > b {
+  font-size: 16px;
+}
+.ai-connection > header > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: #25816b;
+  background: #dff5ec;
+  border-radius: 20px;
+  padding: 5px 9px;
+}
+.ai-connection > p {
+  font-size: 12px;
+  line-height: 1.65;
+  margin: 10px 0;
+  color: #7c678e;
+}
+.ai-account-label strong,
+.ai-account-label span {
+  display: block;
+}
+.ai-account-label strong {
+  font-size: 15px;
+  color: #54366e;
+}
+.ai-account-label span {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.chatgpt-sign-in {
+  width: 100%;
+  border: 1px solid #292929;
+  border-radius: 12px;
+  padding: 12px 14px;
+  min-height: 46px;
+  background: #161616;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+}
+.chatgpt-sign-in:hover:not(:disabled) {
+  background: #333;
+}
+.ai-connection-fields,
+.ai-model-select {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 12px;
+}
+.ai-connection-fields label {
+  display: grid;
+  gap: 7px;
+}
+.ai-connection select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid #c7b2e1;
+  border-radius: 10px;
+  background: #fffaf7;
+  color: #4e366a;
+  padding: 10px;
+  font: inherit;
+  font-size: 13px;
+}
+.ai-connection-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 11px;
+}
+.ai-connection-actions > a,
+.ai-connection-actions > button {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  color: #7653a5;
+  background: transparent;
+}
+.ai-billing-note {
+  font-size: 12px;
+  line-height: 1.6;
+  background: #fff0d2;
+  border: 1px solid #efd39d;
+  color: #8c6430 !important;
+  border-radius: 10px;
+  padding: 10px;
+}
+.ai-provider-choice {
+  margin-top: 13px;
+  font-size: 11px;
+  color: #896c9f;
+}
+.ai-provider-choice summary {
+  cursor: pointer;
+}
+.ai-provider-choice button {
+  display: block;
+  background: #efe4ff;
+  color: #6a4997;
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 8px;
+  width: 100%;
+}
+.ai-connection .ai-error {
+  margin: 12px 0 0;
+  font-size: 12px;
+}
+.chatgpt-notice {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 120;
+  max-width: 480px;
+  width: calc(100% - 32px);
+  border: 2px solid #d8b9e8;
+  border-radius: 18px;
+  background: #fff7ea;
+  box-shadow: 0 10px 35px #37215155;
+  padding: 18px 44px 18px 20px;
+  color: #5d3f7a;
+}
+.chatgpt-notice p {
+  font-size: 14px;
+  color: inherit;
+}
+.chatgpt-notice button {
+  position: absolute;
+  right: 13px;
+  top: 14px;
+  background: none;
+  color: #7d5c96;
+}

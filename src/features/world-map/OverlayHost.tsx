@@ -1,5 +1,6 @@
 import { useProgress } from "../learning/useProgress";
 import { QuestList } from "../learning/QuestList";
+import { AiConnection } from "../ai/AiConnection";
 import { topics } from "../island/data/topics";
 import { mastery as topicMastery } from "../../domain/progression";
 import { useCallback } from "react";
@@ -274,6 +275,7 @@ export function OverlayHost() {
             </>
           ) : (
             <>
+              <AiConnection />
               <div className="settings-heading">
                 <Sparkles />
                 <h3>{t("Preferensi petualangan")}</h3>
@@ -312,7 +314,7 @@ export function OverlayHost() {
               </div>
               <div className="info-box">
                 <h3>{t("Tentang prototype")}</h3>
-                <p>Qwizo · v0.3.0</p>
+                <p>Qwizo · v0.4.0</p>
                 <p>
                   {c(
                     "Progres kuis tersimpan lokal. Tutor dan latihan AI tersedia jika layanan AI diaktifkan; panduan lokal tetap tersedia. Belum ada sinkronisasi akun.",

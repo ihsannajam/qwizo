@@ -44,7 +44,7 @@ export function Sheet({
       if (e.key === "Escape") close();
       if (e.key === "Tab") {
         const items = el?.querySelectorAll<HTMLElement>(
-          "button:not(:disabled),a[href],input:not(:disabled)",
+          "button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled)",
         );
         if (!items?.length) return;
         const first = items[0],

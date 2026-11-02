@@ -14,6 +14,8 @@ export interface AiConfig {
   key: string;
   model: string;
   dailyLimit: number;
+  getStatus?: () => Promise<Record<string, unknown>>;
+  available?: () => Promise<boolean>;
 }
 export interface ModelRequest {
   instructions: string;
@@ -191,7 +193,8 @@ export function createAiService(
     windowStart = 0,
     windowCount = 0;
   async function model(request: ModelRequest) {
-    if (!config.key.trim()) throw new ApiError(503, "ai_not_configured");
+    if (config.available ? !(await config.available()) : !config.key.trim())
+      throw new ApiError(503, "ai_not_configured");
     const now = clock(),
       today = new Date(now).toISOString().slice(0, 10);
     if (today !== day) {
@@ -222,11 +225,13 @@ export function createAiService(
       for (const [id, attempt] of attempts)
         if (attempt.expires <= clock()) attempts.delete(id);
       if (path === "/api/ai/status" && method === "GET")
-        return {
-          ready: !!config.key.trim(),
-          provider: "OpenAI",
-          model: config.model,
-        };
+        return config.getStatus
+          ? await config.getStatus()
+          : {
+              ready: !!config.key.trim(),
+              provider: "OpenAI",
+              model: config.model,
+            };
       if (method !== "POST") throw new ApiError(405, "method_not_allowed");
       const data = record(body);
       if (path === "/api/ai/practice/grade") {
