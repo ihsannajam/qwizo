@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.npm-cache/
+tmp/
+*.tsbuildinfo
+*.local
+.env
+.env.*
+!.env.example
+!.env.template
+*.log
+.DS_Store
+Thumbs.db

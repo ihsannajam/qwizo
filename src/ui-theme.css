@@ -1,0 +1,1444 @@
+:root {
+  font-family: "Fredoka Variable", sans-serif;
+  font-weight: 400;
+  font-synthesis: none;
+}
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "Fredoka Variable", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+b,
+strong {
+  font-family: "Fredoka Variable", sans-serif;
+}
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+button {
+  font-weight: 500;
+}
+p {
+  font-weight: 400;
+}
+.pin-orb,
+.topic-detail-hero > span,
+.math-icon,
+.subject-symbol {
+  font-family: "Fredoka Variable", sans-serif !important;
+}
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-width: 58px;
+  height: 39px;
+  padding: 0 9px;
+  border: 2px solid #e6c88d;
+  border-radius: 11px;
+  color: #fff2ca;
+  background: linear-gradient(#9571b6, #60427f);
+  box-shadow:
+    inset 0 2px 0 #d0a9e1,
+    0 3px 0 #3d2854;
+  cursor: pointer;
+  pointer-events: auto;
+  font-size: 12px;
+}
+.language-toggle:hover {
+  filter: brightness(1.12);
+}
+.language-toggle > span {
+  font-weight: 600;
+}
+.login-language {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 4;
+}
+.game-player-line b {
+  font-size: 14px;
+}
+.game-player-line small {
+  font-size: 10px;
+}
+.game-nav-button > span {
+  font-size: 10px;
+}
+.game-resource small {
+  font-size: 8px;
+}
+.game-quest-banner b {
+  font-size: 13px;
+}
+.game-quest-banner div > span {
+  font-size: 11px;
+}
+.game-resource b {
+  font-weight: 600;
+}
+.mascot-bubble p {
+  font-size: 13px;
+}
+.speaker-tag {
+  font-size: 10px;
+}
+.speaker-tag > span {
+  font-size: 8px;
+}
+.mascot-bubble > button {
+  font-size: 12px;
+}
+.game-world .mascot-bubble {
+  width: 290px;
+}
+.game-world .mascot-guide {
+  width: 445px;
+}
+.game-world .game-player {
+  width: 275px;
+}
+.island-label b {
+  font-weight: 500;
+}
+.island-subtitle {
+  font-weight: 500;
+}
+.game-world .island-subtitle {
+  font-size: 9px;
+}
+/* All overlays share an ornamental journal frame and a readable inner surface. */
+.sheet.quest-journal,
+.game-world .sheet.quest-journal,
+.island-world .sheet.quest-journal {
+  position: fixed;
+  right: 20px;
+  left: auto;
+  top: 50%;
+  bottom: auto;
+  translate: 0 -50%;
+  width: 470px;
+  height: auto;
+  max-height: calc(100dvh - 34px);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  padding: 9px;
+  border-radius: 27px;
+  border: 3px solid #e6c18b;
+  background: linear-gradient(145deg, #9369b8, #503569 54%, #6d4a88);
+  box-shadow:
+    inset 0 2px 0 #f2d8ff,
+    inset 0 -4px 0 #2f203f,
+    0 7px 0 #33203f,
+    0 17px 70px #1d133c77;
+  color: #49335f;
+}
+.sheet.quest-journal:before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  pointer-events: none;
+  border: 1px solid #c19bd177;
+  border-radius: 20px;
+}
+.sheet .sheet-handle {
+  display: none;
+}
+.sheet .journal-rivet {
+  position: absolute;
+  right: 8px;
+  width: 9px;
+  height: 9px;
+  background: radial-gradient(circle at 30% 25%, #fff4bf, #c48f45);
+  border-radius: 50%;
+  border: 1px solid #83583d;
+  z-index: 3;
+}
+.rivet-top {
+  top: 7px;
+}
+.rivet-bottom {
+  bottom: 7px;
+}
+.sheet.quest-journal > header.sheet-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex-shrink: 0;
+  min-height: 88px;
+  margin: 0;
+  padding: 13px 12px 16px;
+  color: #fff0d2;
+  position: relative;
+  z-index: 2;
+}
+.journal-emblem {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: linear-gradient(#ffdf99, #cd9650);
+  color: #8a5a37;
+  border: 2px solid #ffefbd;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 2px 0 #fff6d9,
+    0 4px 0 #7b5141;
+  rotate: -7deg;
+}
+.journal-title {
+  flex: 1;
+  min-width: 0;
+}
+.sheet.quest-journal .journal-title .eyebrow,
+.game-world .sheet .journal-title .eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  color: #e9cfa6;
+  line-height: 1.4;
+  display: block;
+}
+.sheet.quest-journal .journal-title h2,
+.game-world .sheet .journal-title h2 {
+  font-size: 25px;
+  line-height: 1.08;
+  font-weight: 600;
+  color: #fff6df;
+  text-shadow: 0 2px 0 #372241;
+  margin-top: 7px;
+  letter-spacing: -0.5px;
+}
+.journal-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.journal-actions .language-toggle {
+  min-width: 48px;
+  height: 32px;
+  border-width: 1px;
+  border-color: #d8b8dc;
+  font-size: 10px;
+  padding: 0 5px;
+}
+.journal-actions .language-toggle svg {
+  width: 14px;
+}
+.sheet.quest-journal .journal-close,
+.game-world .sheet .journal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(#f5daa1, #d9ab6b);
+  border: 1px solid #ffebc6;
+  color: #7f5136;
+  box-shadow: 0 3px 0 #8e6148;
+}
+.sheet.quest-journal .sheet-body {
+  position: relative;
+  z-index: 1;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #c8a2d4 #f3e5f1;
+  padding: 22px 22px 17px;
+  border: 2px solid #d8b89c;
+  border-radius: 17px;
+  background: radial-gradient(ellipse at top, #fffdf4, #f6ebdb);
+  color: #503962;
+  min-height: 0;
+  box-shadow: inset 0 3px 12px #c39f8230;
+}
+.sheet.quest-journal .sheet-body:after {
+  content: "";
+  display: block;
+  height: 4px;
+}
+.sheet .sheet-body h3 {
+  font-size: 20px;
+  color: #6e4584;
+  font-weight: 600;
+  line-height: 1.22;
+  margin: 17px 0 10px;
+}
+.sheet .sheet-body p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #80658b;
+}
+.sheet .sheet-body b {
+  color: #59406a;
+  font-weight: 500;
+}
+.sheet .sheet-body small {
+  font-size: 12px;
+  color: #8d709a;
+}
+.sheet .sheet-body .stat-line {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 17px 0 10px;
+}
+.sheet .sheet-body .stat-line > span {
+  color: #8b6b96;
+}
+.journal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  flex-shrink: 0;
+  color: #e3bd83;
+  padding: 14px 7px 5px;
+}
+.journal-footer b {
+  font-size: 21px;
+  color: #fff0d6;
+  font-weight: 600;
+  text-shadow: 0 2px 0 #3c2647;
+  rotate: -4deg;
+}
+.journal-footer small {
+  font-size: 10px;
+  color: #cfb2d8;
+}
+.journal-footer > span {
+  font-size: 12px;
+}
+.sheet .sheet-body .journal-hero {
+  position: relative;
+  background: radial-gradient(
+    ellipse at 30% 20%,
+    #b98add,
+    #8e5fad 60%,
+    #714490
+  );
+  border: 2px solid #e3bcf1;
+  border-radius: 19px;
+  padding: 20px 18px;
+  box-shadow:
+    inset 0 2px 0 #d4b0ec,
+    0 4px 0 #b191ba;
+  margin-bottom: 23px;
+  overflow: hidden;
+  color: white;
+}
+.sheet .sheet-body .quest-hero {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  text-align: left;
+}
+.sheet .sheet-body .journal-hero h3 {
+  color: #fff4d6;
+  font-size: 25px;
+  margin: 7px 0 9px;
+  text-shadow: 0 2px 0 #674174;
+  line-height: 1.05;
+}
+.sheet .sheet-body .journal-hero p {
+  color: #f1e1f7;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.hero-medallion {
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: linear-gradient(#ffe0a8, #e3ac69);
+  border: 2px solid #ffefc6;
+  border-radius: 20px;
+  box-shadow: 0 5px 0 #8a5b64;
+  color: #a76a47;
+  rotate: -9deg;
+}
+.hero-kicker {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ffe4aa;
+}
+.hero-stars {
+  position: absolute;
+  right: 10px;
+  bottom: 3px;
+  color: #eac5ed88;
+  font-size: 27px;
+}
+.quest-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0;
+}
+.quest-score > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b285bf;
+}
+.quest-score b {
+  font-size: 16px;
+}
+.quest-score > strong {
+  color: #9060a6;
+  font-size: 30px;
+}
+.quest-score strong small {
+  font-size: 18px;
+}
+.sheet .quest-list {
+  margin-top: 19px;
+}
+.sheet .quest-item {
+  position: relative;
+  gap: 11px;
+  padding: 17px 12px;
+  border: 1px solid #dec9dc;
+  border-radius: 15px;
+  background: linear-gradient(#fffdf8, #f9f1e8);
+  box-shadow: 0 3px 0 #e6d8d7;
+  margin-bottom: 12px;
+}
+.sheet .quest-item b {
+  font-size: 15px;
+  line-height: 1.15;
+}
+.sheet .quest-item small {
+  font-size: 11px;
+  color: #ab8aab;
+  margin-top: 7px;
+}
+.sheet .quest-check,
+.sheet .quest-circle {
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+}
+.sheet .quest-check {
+  background: linear-gradient(#b48bda, #8056ab);
+  box-shadow: 0 3px 0 #5e4081;
+  border: 1px solid #d6b5ed;
+}
+.sheet .quest-circle {
+  background: #f5edf9;
+  border: 2px solid #d5bee6;
+}
+.sheet .reward {
+  font-size: 11px;
+  border-radius: 10px;
+  background: linear-gradient(#ffe4a4, #eac17e);
+  border: 1px solid #e6c492;
+  padding: 9px 8px;
+  color: #8a5e31;
+  box-shadow: 0 2px 0 #cba16e;
+  font-weight: 500;
+}
+.sheet .reward:disabled {
+  opacity: 0.75;
+}
+.sheet .fine-print {
+  font-size: 11px !important;
+  line-height: 1.6;
+  color: #ab8caa !important;
+  margin-top: 20px;
+}
+.sheet .profile-block {
+  border: 1px solid #ddc6e7;
+  background: #fff8f1;
+  border-radius: 17px;
+  padding: 17px;
+}
+.sheet .profile-block h3 {
+  margin: 0 0 5px;
+}
+.sheet .profile-block p {
+  font-size: 12px;
+}
+.sheet .level-badge {
+  background: #ebe0f3;
+  color: #8e67a6;
+}
+.sheet .metric-grid {
+  margin: 22px 0;
+}
+.sheet .metric-grid > div {
+  background: linear-gradient(#f5e8f5, #eadcf0);
+  border: 1px solid #d8c2e4;
+  box-shadow: 0 3px 0 #d3bdde;
+}
+.sheet .metric-grid svg {
+  color: #a87dba;
+}
+.sheet .metric-grid b {
+  font-size: 18px;
+}
+.sheet .metric-grid small {
+  font-size: 11px;
+}
+.sheet .continue-card {
+  background: #fff8ef;
+  border: 1px solid #dbc5df;
+}
+.sheet .continue-card b {
+  font-size: 17px;
+}
+.sheet .continue-card p {
+  font-size: 12px;
+}
+.sheet .section-heading h3 {
+  font-size: 18px;
+}
+.sheet .section-heading svg {
+  color: #af86ba;
+}
+.sheet .text-button {
+  color: #9670ac;
+  font-size: 12px;
+  font-weight: 500;
+}
+.sheet .primary-button,
+.game-world .sheet .primary-button {
+  font-size: 16px;
+  min-height: 47px;
+  padding: 12px 17px;
+  border: 2px solid #d9b7ed;
+  background: linear-gradient(#af80d5, #8c5bb5);
+  box-shadow:
+    inset 0 2px 0 #d9b8ef,
+    0 4px 0 #654180;
+  border-radius: 13px;
+  color: #fff9eb;
+  letter-spacing: 0;
+}
+.sheet .tip {
+  font-size: 12px;
+  background: #ede1f1;
+  color: #9f7dab;
+}
+.sheet .achievement {
+  text-align: center;
+}
+.sheet .subject-progress {
+  padding: 13px;
+  border-radius: 12px;
+  background: #fffbf6;
+  border: 1px solid #e5d4e2;
+}
+.sheet .subject-progress .stat-line {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+.sheet .setting-row {
+  border: 1px solid #dfcfe0;
+  background: #fff9f2;
+  border-radius: 14px;
+  padding: 18px 13px;
+  margin-bottom: 13px;
+  gap: 12px;
+}
+.sheet .setting-row b {
+  font-size: 15px;
+}
+.sheet .setting-row p {
+  font-size: 12px;
+  margin-top: 5px;
+}
+.sheet .setting-row > svg {
+  color: #ac87bc;
+}
+.settings-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #b58bc3;
+}
+.sheet .settings-heading h3 {
+  margin: 0 0 20px;
+}
+.sheet .settings-heading > svg {
+  margin-bottom: 20px;
+}
+.sheet .info-box {
+  background: #eee1ef;
+  border: 1px solid #d5bedf;
+}
+.sheet .info-box p {
+  font-size: 13px;
+}
+.sheet .secondary-button {
+  font-size: 14px;
+}
+.sheet .island-preview {
+  border: 1px solid #d9c1e6;
+  height: 220px;
+  background: radial-gradient(ellipse, #f1dcff, #e5d1ef);
+  box-shadow: inset 0 1px 0 white;
+}
+.sheet .island-preview .rendered-island {
+  height: 210px;
+}
+.sheet .mini-stats {
+  font-size: 12px;
+  color: #9a7aa8;
+}
+.sheet .status {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.sheet .topic-detail-hero {
+  background: linear-gradient(#eee1f5, #e6daf1);
+  border: 1px solid #d1bbdf;
+}
+.sheet .topic-detail-hero h3 {
+  font-size: 19px;
+}
+.sheet .topic-detail-hero p {
+  font-size: 13px;
+}
+.sheet .material-list > button {
+  padding: 17px 12px;
+  border: 1px solid #decce2;
+  background: #fffaf4;
+  box-shadow: 0 3px 0 #e4d5df;
+}
+.sheet .material-list b {
+  font-size: 15px;
+  line-height: 1.25;
+}
+.sheet .material-list small {
+  font-size: 12px;
+}
+.sheet .material-index,
+.sheet .material-done {
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+}
+.sheet .lesson-concept,
+.sheet .lesson-example {
+  border: 1px solid #d8c4df;
+}
+.sheet .lesson-concept p,
+.sheet .lesson-example p {
+  font-size: 16px;
+}
+.sheet .lesson-example .eyebrow {
+  font-size: 10px;
+  color: #b38b52;
+}
+.sheet .lesson-meta {
+  font-size: 13px;
+}
+.sheet .lesson-preview > .text-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sheet .lesson-concept {
+  background: #eee0f4;
+}
+.sheet .lesson-example {
+  background: #fff1cc;
+}
+.sheet-backdrop,
+.game-world .sheet-backdrop,
+.island-world .sheet-backdrop {
+  inset: 0;
+  background: #251b4966;
+  backdrop-filter: blur(5px);
+}
+/* Every marker, the terrain artwork, and the walking route use one fixed aspect. */
+.trail-world {
+  background: #c7def0 url("/assets/math-backdrop.webp") center/cover no-repeat;
+}
+.trail-world:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #d9e8f4cc;
+  backdrop-filter: blur(20px);
+  pointer-events: none;
+}
+.trail-world .level-scroll {
+  inset: 76px 0 0;
+  display: flex;
+  align-items: safe center;
+  justify-content: safe center;
+  scrollbar-width: thin;
+}
+.trail-world .level-terrain.authored-terrain {
+  width: min(100%, calc((100dvh - 76px) * 1.5));
+  min-width: 850px;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: 3/2;
+  flex: none;
+  margin: auto;
+  transform-origin: center;
+}
+.trail-world .terrain-art {
+  background-size: 100% 100%;
+  background-position: 0 0;
+}
+.trail-world .terrain-haze {
+  background: linear-gradient(
+    #e8e9ff55,
+    transparent 22%,
+    transparent 80%,
+    #e6eaff22
+  );
+}
+.trail-world .learning-path,
+.trail-world .pin-aura,
+.trail-world .terrain-spark {
+  display: none !important;
+}
+.trail-world .island-topbar {
+  background: linear-gradient(#7d5993ee, #553c70ed);
+  border-bottom: 2px solid #dfbf91;
+  box-shadow: 0 4px 0 #3d2d4a44;
+}
+.trail-world .return-world {
+  background: linear-gradient(#d6b2e6, #b58dcd);
+  border: 1px solid #efd7ff;
+  box-shadow: 0 3px 0 #694d80;
+  color: #52366b;
+  font-size: 14px;
+  padding: 10px 14px;
+}
+.trail-world .island-brand > span {
+  font-size: 12px;
+  color: #ecd8ef;
+  font-weight: 400;
+  letter-spacing: 1px;
+  border-color: #c6a3ce;
+}
+.trail-world .island-profile b {
+  font-size: 14px;
+  color: #fff0d6;
+}
+.trail-world .island-profile small {
+  font-size: 11px;
+  color: #d8c1e2;
+}
+.trail-world .island-intro {
+  top: 98px;
+  left: 23px;
+  max-width: 350px;
+  pointer-events: none;
+}
+.trail-world .chapter-tag {
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  color: #856096;
+}
+.trail-world .island-intro h1 {
+  font-size: 31px;
+  line-height: 1.04;
+  color: #69427e;
+  text-shadow: 0 2px 1px #fff9ed;
+  margin: 8px 0 7px;
+}
+.trail-world .island-intro h1 > span {
+  color: #9871b9;
+}
+.trail-world .island-intro p {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #886b9b;
+}
+.trail-world .island-summary {
+  top: auto;
+  bottom: 79px;
+  right: 19px;
+  max-width: 320px;
+  padding: 12px 15px;
+  background: linear-gradient(#faf2ffed, #e9dcf1ed);
+  border: 2px solid #d9c0e5;
+  box-shadow: 0 4px 0 #ad8dbd77;
+  gap: 8px 12px;
+  border-radius: 14px;
+}
+.trail-world .island-summary b {
+  font-size: 15px;
+  color: #73518d;
+  font-weight: 500;
+}
+.trail-world .island-summary span {
+  font-size: 10px;
+  color: #a184af;
+}
+.trail-world .island-summary svg {
+  color: #a17db9;
+}
+.trail-world .topic-pin {
+  translate: -50% -27px;
+  transform: none;
+  width: 160px;
+  padding: 0;
+  gap: 0;
+  isolation: isolate;
+}
+.trail-world .pin-number {
+  position: absolute;
+  top: -23px;
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  background: #876598e8;
+  border: 1px solid #ddc3ea;
+  line-height: 1;
+}
+.trail-world .pin-orb {
+  height: 54px;
+  width: 58px;
+  font-size: 28px;
+  border-width: 3px;
+}
+.trail-world .pin-label {
+  min-width: 138px;
+  max-width: 165px;
+  gap: 4px;
+  padding: 8px 10px;
+  margin-top: 12px;
+  background: linear-gradient(#fffbf4f5, #f3e7daf5);
+  border: 1px solid #d5bdd7;
+  box-shadow: 0 3px 0 #b095bb66;
+  border-radius: 12px;
+}
+.trail-world .pin-label b {
+  font-size: 14px;
+  font-weight: 500;
+  color: #76558e;
+  line-height: 1.1;
+}
+.trail-world .pin-label small {
+  font-size: 10px;
+  color: #a387af;
+  line-height: 1.2;
+}
+.trail-world .continue-marker {
+  font-size: 8px;
+  padding: 5px 8px;
+  color: #926e3f;
+  letter-spacing: 0.6px;
+  margin-top: 7px;
+}
+.trail-world .topic-pin:disabled {
+  opacity: 0.9;
+}
+.trail-world .pin-destination .pin-orb {
+  border-color: #ffe8af;
+  box-shadow:
+    0 7px 0 #68418a,
+    0 0 0 4px #ffdb8e66;
+}
+.derivative-symbol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 0.83;
+  font-size: 18px;
+  width: 30px;
+  overflow: hidden;
+  gap: 3px;
+}
+.derivative-symbol > span:first-child {
+  border-bottom: 1.5px solid currentColor;
+  width: 28px;
+  text-align: center;
+  padding-bottom: 3px;
+}
+.derivative-symbol > span:last-child {
+  font-size: 16px;
+}
+.island-rover {
+  position: absolute;
+  z-index: 8;
+  translate: -50% -100%;
+  width: 68px;
+  height: 89px;
+  pointer-events: none;
+  transform-origin: 50% 90%;
+}
+.island-rover > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 3px #544b7755);
+  transform-origin: 50% 95%;
+  user-select: none;
+}
+.rover-shadow {
+  position: absolute;
+  width: 48px;
+  height: 10px;
+  border-radius: 50%;
+  background: #54436d44;
+  bottom: -3px;
+  left: 10px;
+  filter: blur(2px);
+}
+.rover-name {
+  position: absolute;
+  left: 50%;
+  top: -17px;
+  translate: -50% 0;
+  font-size: 11px;
+  color: #ffefc6;
+  background: #80558fdd;
+  border: 1px solid #d7b4e6;
+  border-radius: 7px;
+  padding: 1px 7px;
+}
+.island-rover.is-walking > img {
+  animation: rover-walk 0.24s ease-in-out infinite alternate;
+}
+.island-rover.is-walking .rover-shadow {
+  animation: rover-shadow 0.24s ease-in-out infinite alternate;
+}
+.trail-world .boss-pin {
+  translate: -50% -30px;
+  top: auto;
+  width: 150px;
+  z-index: 4;
+}
+.trail-world .boss-pin > span {
+  width: 58px;
+  height: 58px;
+  font-size: 36px;
+  border-radius: 17px;
+}
+.trail-world .boss-pin b {
+  font-size: 9px;
+  margin: 10px 0 5px;
+  background: #806096ed;
+  color: #fff2d8;
+  border: 1px solid #ddc0e8;
+  letter-spacing: 0.5px;
+}
+.trail-world .boss-pin small {
+  font-size: 9px;
+  color: #8b6b9c;
+  border: 1px solid #d8c0e3;
+}
+.island-companion {
+  position: absolute;
+  z-index: 12;
+  left: 20px;
+  top: 205px;
+  width: 278px;
+  pointer-events: none;
+}
+.island-companion > .mascot-bubble {
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 15px 16px;
+  pointer-events: auto;
+  box-shadow:
+    0 4px 0 #ad8b6c77,
+    0 9px 25px #53436420;
+}
+.island-companion .mascot-bubble:before,
+.island-companion .mascot-bubble:after {
+  display: none;
+}
+.island-companion .mascot-bubble p {
+  font-size: 13px;
+  min-height: 55px;
+  line-height: 1.5;
+}
+.journey-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  margin-top: 10px;
+  color: #80518c;
+  background: #fbf1ffed;
+  padding: 8px 10px;
+  border-radius: 9px;
+  border: 1px solid #d4b6e2;
+}
+.walking-dots {
+  color: #af82bb;
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+.trail-world .island-footer {
+  left: 50%;
+  right: auto;
+  bottom: 15px;
+  translate: -50% 0;
+  width: auto;
+  max-width: 90%;
+  padding: 0;
+  border: 0;
+  background: none;
+  backdrop-filter: none;
+  z-index: 15;
+  gap: 12px;
+}
+.trail-world .island-footer > span {
+  display: none;
+}
+.trail-world .island-footer > button {
+  font-size: 14px;
+  color: #fff0d8;
+  background: linear-gradient(#b18cd0, #8865ad);
+  border: 2px solid #dcbce9;
+  box-shadow: 0 4px 0 #604377;
+  padding: 10px 17px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.trail-world .curriculum-overview {
+  bottom: 76px;
+  max-width: 760px;
+  border: 3px solid #d3b7dd;
+  background: linear-gradient(#fff7ee, #f2e4eb);
+  box-shadow:
+    0 5px 0 #b08abb,
+    0 15px 60px #61447666;
+}
+.trail-world .curriculum-overview h2 {
+  font-size: 26px;
+  color: #7b5390;
+}
+.trail-world .curriculum-overview .eyebrow {
+  font-size: 10px;
+}
+.trail-world .overview-grid > button {
+  background: linear-gradient(#f3e5f5, #e6d5ef);
+  border-color: #d3b7df;
+  box-shadow: 0 3px 0 #ceb1d9;
+}
+.trail-world .overview-grid b {
+  font-size: 16px;
+  color: #805a98;
+}
+.trail-world .overview-grid small {
+  font-size: 12px;
+}
+.trail-world .overview-grid span {
+  font-size: 12px;
+  color: #b18abd;
+}
+@keyframes rover-walk {
+  from {
+    transform: translateY(0) rotate(-4deg);
+  }
+  to {
+    transform: translateY(-4px) rotate(4deg);
+  }
+}
+@keyframes rover-shadow {
+  from {
+    scale: 1;
+    opacity: 0.65;
+  }
+  to {
+    scale: 0.82;
+    opacity: 0.4;
+  }
+}
+@media (min-width: 1500px) {
+  .trail-world .island-companion {
+    top: 215px;
+    left: 28px;
+  }
+  .trail-world .island-intro {
+    left: 28px;
+  }
+  .trail-world .island-intro h1 {
+    font-size: 36px;
+  }
+  .trail-world .level-terrain.authored-terrain {
+    min-height: 0;
+  }
+}
+@media (max-width: 1100px) {
+  .game-world .game-player {
+    width: 230px;
+  }
+  .game-world .game-player-line small {
+    font-size: 9px;
+  }
+  .game-world .game-player-line b {
+    font-size: 12px;
+  }
+  .game-resource {
+    min-width: 110px;
+  }
+  .game-resources {
+    gap: 10px;
+  }
+  .game-world .mascot-guide {
+    width: 420px;
+  }
+  .game-nav-button > span {
+    font-size: 9px;
+  }
+}
+@media (max-width: 767px) {
+  .game-world .game-player {
+    width: 179px;
+  }
+  .game-world .game-player-line b {
+    font-size: 12px;
+    max-width: 58px;
+  }
+  .game-world .game-player-line small {
+    font-size: 7px;
+  }
+  .game-hud .game-resources .language-toggle {
+    position: absolute;
+    left: 0;
+    top: 67px;
+    height: 34px;
+    min-width: 58px;
+    width: 58px;
+    font-size: 11px;
+  }
+  .game-hud .game-resources .language-toggle svg {
+    width: 15px;
+  }
+  .game-resource small {
+    font-size: 6px;
+  }
+  .game-nav-button > span {
+    font-size: 9px;
+  }
+  .game-world .mascot-guide {
+    width: calc(100% - 24px);
+  }
+  .game-world .mascot-bubble {
+    width: calc(100% - 93px);
+  }
+  .mascot-bubble p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .speaker-tag {
+    font-size: 9px;
+  }
+  .speaker-tag > span {
+    font-size: 7px;
+  }
+  .mascot-bubble > button {
+    font-size: 11px;
+  }
+  .sheet.quest-journal,
+  .game-world .sheet.quest-journal,
+  .island-world .sheet.quest-journal {
+    top: auto;
+    left: 10px;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    translate: 0 0;
+    width: auto;
+    max-height: 89dvh;
+    border-radius: 25px;
+    padding: 7px;
+  }
+  .sheet.quest-journal > header.sheet-header {
+    gap: 9px;
+    padding: 12px 8px 15px;
+    min-height: 78px;
+  }
+  .journal-emblem {
+    height: 37px;
+    width: 37px;
+    border-radius: 12px;
+  }
+  .journal-emblem svg {
+    width: 23px;
+  }
+  .sheet.quest-journal .journal-title h2,
+  .game-world .sheet .journal-title h2 {
+    font-size: 23px;
+  }
+  .sheet.quest-journal .journal-title .eyebrow,
+  .game-world .sheet .journal-title .eyebrow {
+    font-size: 6px;
+    letter-spacing: 0.9px;
+  }
+  .journal-actions {
+    gap: 5px;
+  }
+  .journal-actions .language-toggle {
+    min-width: 43px;
+    height: 30px;
+    font-size: 9px;
+  }
+  .sheet.quest-journal .journal-close {
+    height: 30px;
+    width: 30px;
+  }
+  .sheet.quest-journal .sheet-body {
+    padding: 19px 16px 14px;
+    border-radius: 16px;
+  }
+  .journal-footer {
+    padding-top: 11px;
+  }
+  .journal-footer small {
+    font-size: 9px;
+  }
+  .sheet .sheet-body .quest-hero {
+    padding: 19px 14px;
+    gap: 12px;
+  }
+  .sheet .sheet-body .journal-hero h3 {
+    font-size: 24px;
+  }
+  .hero-medallion {
+    height: 53px;
+    width: 53px;
+    border-radius: 17px;
+  }
+  .hero-medallion svg {
+    width: 34px;
+  }
+  .sheet .sheet-body .journal-hero p {
+    font-size: 12px;
+  }
+  .sheet .quest-item {
+    padding: 16px 10px;
+    gap: 9px;
+  }
+  .sheet .quest-item b {
+    font-size: 14px;
+  }
+  .sheet .quest-item small {
+    font-size: 10px;
+  }
+  .sheet .reward {
+    font-size: 10px;
+    padding: 8px 6px;
+  }
+  .trail-world .level-scroll {
+    inset: 66px 0 0;
+  }
+  .trail-world .level-terrain.authored-terrain {
+    width: 1100px;
+    min-width: 1100px;
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 3/2;
+  }
+  .trail-world .island-topbar {
+    height: 66px;
+  }
+  .trail-world .return-world {
+    font-size: 12px;
+    padding: 8px;
+  }
+  .trail-world .island-brand > span {
+    display: none;
+  }
+  .trail-world .island-profile {
+    gap: 9px;
+  }
+  .trail-world .island-profile .language-toggle {
+    height: 33px;
+    min-width: 48px;
+    font-size: 10px;
+  }
+  .trail-world .island-intro {
+    top: 83px;
+    left: 16px;
+    max-width: 275px;
+  }
+  .trail-world .island-intro h1 {
+    font-size: 29px;
+    max-width: 250px;
+  }
+  .trail-world .island-intro h1 > span {
+    display: inline;
+  }
+  .trail-world .island-intro p {
+    font-size: 11px;
+    max-width: 240px;
+  }
+  .trail-world .island-summary {
+    top: auto;
+    left: auto;
+    right: 13px;
+    bottom: 77px;
+    max-width: 260px;
+    padding: 10px;
+    gap: 8px;
+    border-radius: 12px;
+    z-index: 9;
+  }
+  .trail-world .island-summary span {
+    font-size: 8px;
+  }
+  .trail-world .island-summary b {
+    font-size: 12px;
+  }
+  .trail-world .chapter-tag {
+    font-size: 8px;
+  }
+  .island-companion {
+    top: 207px;
+    left: 13px;
+    width: 250px;
+  }
+  .island-companion .mascot-bubble {
+    padding: 12px 14px;
+    min-height: 0;
+  }
+  .island-companion .mascot-bubble p {
+    font-size: 12px;
+    min-height: 47px;
+  }
+  .island-companion .speaker-tag {
+    font-size: 8px;
+  }
+  .island-companion .speaker-tag > span {
+    font-size: 7px;
+  }
+  .trail-world .pin-label b {
+    font-size: 14px;
+  }
+  .trail-world .pin-label small {
+    font-size: 10px;
+  }
+  .trail-world .topic-pin {
+    width: 160px;
+  }
+  .trail-world .pin-orb {
+    height: 54px;
+    width: 58px;
+  }
+  .trail-world .boss-pin {
+    top: auto;
+  }
+  .trail-world .island-footer {
+    bottom: 17px;
+    padding: 0;
+    min-height: 0;
+    width: auto;
+    justify-content: center;
+  }
+  .trail-world .island-footer > button {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+  .trail-world .curriculum-overview {
+    bottom: 78px;
+    max-height: 68dvh;
+    padding: 20px 16px;
+  }
+  .trail-world .curriculum-overview h2 {
+    font-size: 24px;
+  }
+  .trail-world .overview-grid b {
+    font-size: 15px;
+  }
+  .trail-world .overview-grid small {
+    font-size: 11px;
+  }
+  .derivative-symbol {
+    font-size: 18px;
+  }
+  .derivative-symbol > span:last-child {
+    font-size: 16px;
+  }
+}
+@media (max-width: 360px) {
+  .game-world .game-player {
+    width: 156px;
+  }
+  .game-world .game-player-line b {
+    font-size: 11px;
+    max-width: 45px;
+  }
+  .game-world .game-player-line small {
+    font-size: 6px;
+  }
+  .sheet.quest-journal .journal-title h2,
+  .game-world .sheet .journal-title h2 {
+    font-size: 21px;
+  }
+  .journal-emblem {
+    width: 31px;
+    height: 34px;
+  }
+  .sheet .quest-item b {
+    font-size: 13px;
+  }
+  .sheet .reward {
+    font-size: 9px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .island-rover > img,
+  .island-rover .rover-shadow {
+    animation: none !important;
+  }
+}
+.reduce-motion .island-rover > img,
+.reduce-motion .island-rover .rover-shadow {
+  animation: none !important;
+}
+.trail-world .topic-pin[data-topic="geometri"] .pin-label {
+  position: absolute;
+  right: calc(50% + 41px);
+  top: 1px;
+  margin: 0;
+}
+.trail-world .topic-pin[data-topic="integral"] .pin-label {
+  translate: 55px 0;
+}
+.trail-world .topic-pin[data-topic="geometri"] .continue-marker {
+  position: absolute;
+  right: calc(50% + 50px);
+  top: 64px;
+  white-space: nowrap;
+}
+.trail-world .boss-pin {
+  width: 64px;
+}
+.trail-world .boss-pin > b {
+  position: absolute;
+  left: calc(50% + 42px);
+  top: 3px;
+  margin: 0;
+  white-space: nowrap;
+  min-width: 136px;
+  padding: 7px 9px;
+}
+.trail-world .boss-pin > small {
+  position: absolute;
+  left: calc(50% + 42px);
+  top: 37px;
+  white-space: nowrap;
+  min-width: 136px;
+  padding: 5px 7px;
+  justify-content: center;
+}
