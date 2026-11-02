@@ -9,18 +9,21 @@ export function BossArena({
   attack,
   turn,
   onHelp,
+  inactive = false,
 }: {
   bossHP: number;
   playerHP: number;
   attack: "qwi" | "guardian" | null;
   turn: number;
   onHelp: () => void;
+  inactive?: boolean;
 }) {
   const { language } = useI18n();
   const c = (id: string, en: string) => (language === "id" ? id : en);
   return (
     <section
       className="boss-battle"
+      inert={inactive}
       aria-label={c("Arena pertarungan", "Battle arena")}
     >
       <header className="battle-heading">

@@ -6,6 +6,14 @@ Browser checks used a separate local QA profile, leaving the owner's browser pro
 
 ## Background asset
 
+### Game result overlay
+
+Boss results now appear in a centered game overlay above the full-size, dimmed arena. Victory uses a gold trophy, stars, burst particles and actual earned rewards. Defeat uses a cooler Qwi panel with a prominent retry action and omits zero-value loot. Replay victories explain that the first-win reward has already been claimed. Stats use the submitted outcome and remaining Qwi HP.
+
+Review replaces the content inside the same panel; its answer list scrolls internally while the back action remains visible. Escape returns from review and restores focus. The arena/help and header are inert during results, and the session focus loop excludes inert controls.
+
+Browser QA verified defeat after two misses, retry, then first victory after five hits with +300 XP and +100 coins. Both result panels fit without overflow at 1920×1080, 1366×574, 390×778, 320×480 and 844×390. At 320×480 the review list scrolls while the back action remains inside the screen; the stage does not scroll. No browser console errors were observed. Build and existing 15 MVP checks passed.
+
 ### Finishing-hit animations
 
 At 0 HP the guardian flashes, contracts and disperses into 12 crystal fragments. Qwi's defeat instead staggers, falls sideways and dims. These animate the inner sprite after the impact/recoil, leaving the anchor and overhead HP stable. Both retain their defeated appearance until retry. A final turn locks the results action for 2.8 seconds; ordinary attacks still use 1.2 seconds. Reduced-motion mode skips the delay and immediately displays the final defeated state.

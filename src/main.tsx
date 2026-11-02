@@ -8,6 +8,7 @@ import "./styles.css";
 import "./ui-theme.css";
 import "./features/learning/learning.css";
 import "./features/learning/boss-arena.css";
+import "./features/learning/boss-result.css";
 import "./features/island/atmosphere.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

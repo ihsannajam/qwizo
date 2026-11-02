@@ -22,6 +22,7 @@ import { TutorPanel } from "./TutorPanel";
 import { newSession, sessionReducer } from "./session";
 import { AiPractice } from "../ai/AiPractice";
 import { BossArena } from "./BossArena";
+import { BossResult } from "./BossResult";
 
 export function LearningSession({
   id,
@@ -141,8 +142,13 @@ export function LearningSession({
           const root = exit
             ? stage.current?.querySelector(".session-exit")
             : stage.current;
-          const items = root?.querySelectorAll<HTMLElement>(
-            "button:not(:disabled),input,textarea,a[href],select:not(:disabled)",
+          const items = Array.from(
+            root?.querySelectorAll<HTMLElement>(
+              "button:not(:disabled),input,textarea,a[href],select:not(:disabled),[tabindex='0']",
+            ) ?? [],
+          ).filter(
+            (item) =>
+              !item.closest("[inert]") && item.getClientRects().length > 0,
           );
           if (!items?.length) return;
           const first = items[0],
@@ -166,7 +172,10 @@ export function LearningSession({
         }
       }}
     >
-      <header className="learning-header" inert={exit || tutor}>
+      <header
+        className="learning-header"
+        inert={exit || tutor || (boss && phase === "result")}
+      >
         <button
           className="session-back"
           aria-label={c("Pulau Matematika", "Mathematics Island")}
@@ -192,6 +201,7 @@ export function LearningSession({
             }
             turn={answers.length}
             onHelp={() => setTutor(true)}
+            inactive={phase === "result"}
           />
         ) : (
           <aside className="session-story">
@@ -378,7 +388,18 @@ export function LearningSession({
               </button>
             </article>
           )}
-          {phase === "result" && result && (
+          {phase === "result" && result && boss && (
+            <BossResult
+              result={result}
+              answers={answers}
+              questions={questions}
+              playerHP={battle.playerHP}
+              headingRef={heading}
+              retry={retry}
+              close={close}
+            />
+          )}
+          {phase === "result" && result && !boss && (
             <article
               className={`result-card ${result.passed ? "victory" : "retry"}`}
             >
