@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
-  Heart,
   Lightbulb,
   Shield,
   Sparkles,
@@ -22,6 +21,7 @@ import { topics } from "../island/data/topics";
 import { TutorPanel } from "./TutorPanel";
 import { newSession, sessionReducer } from "./session";
 import { AiPractice } from "../ai/AiPractice";
+import { BossArena } from "./BossArena";
 
 export function LearningSession({
   id,
@@ -50,12 +50,24 @@ export function LearningSession({
   const [tutor, setTutor] = useState(false);
   const [exit, setExit] = useState(false);
   const [aiActive, setAiActive] = useState(false);
+  const [attacking, setAttacking] = useState(false);
+  const battle = battleStatus(boss ? answers : []);
+  useEffect(() => {
+    if (!attacking) return;
+    const reduced =
+      game.reduced ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = window.setTimeout(
+      () => setAttacking(false),
+      reduced ? 0 : battle.finished ? 2800 : 1200,
+    );
+    return () => window.clearTimeout(timer);
+  }, [attacking, game.reduced, battle.finished]);
   const stage = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const submitting = useRef(false);
   const index = checked ? answers.length - 1 : answers.length;
   const question = questions[index];
-  const battle = battleStatus(boss ? answers : []);
   const nextUnit = curriculum[curriculum.findIndex((u) => u.id === id) + 1];
   const requestClose = () =>
     (phase === "quiz" && answers.length > 0) || aiActive
@@ -82,10 +94,11 @@ export function LearningSession({
   }, [phase, answers.length, aiActive]);
   const check = () => {
     if (choice === null || checked || submitting.current) return;
+    if (boss) setAttacking(true);
     dispatch({ type: "check" });
   };
   const advance = () => {
-    if (submitting.current) return;
+    if (submitting.current || attacking) return;
     if ((boss && battle.finished) || answers.length === questions.length) {
       submitting.current = true;
       const outcome = boss
@@ -109,7 +122,7 @@ export function LearningSession({
     <div
       ref={stage}
       tabIndex={-1}
-      className={`learning-stage ${boss ? "boss-stage" : ""}`}
+      className={`learning-stage ${boss ? `boss-stage boss-phase-${phase} ${checked ? "boss-answer-checked" : ""}` : ""}`}
       role="dialog"
       aria-modal="true"
       aria-label={
@@ -154,7 +167,11 @@ export function LearningSession({
       }}
     >
       <header className="learning-header" inert={exit || tutor}>
-        <button className="session-back" onClick={requestClose}>
+        <button
+          className="session-back"
+          aria-label={c("Pulau Matematika", "Mathematics Island")}
+          onClick={requestClose}
+        >
           <ArrowLeft size={18} />
           <span>{c("Pulau Matematika", "Mathematics Island")}</span>
         </button>
@@ -162,78 +179,37 @@ export function LearningSession({
         <LanguageToggle />
       </header>
       <div className="session-layout" inert={exit || tutor}>
-        <aside className="session-story">
-          <span className="learning-eyebrow">
-            {boss
-              ? c("TANTANGAN AKHIR", "FINAL CHALLENGE")
-              : c("PETUALANGAN PENGETAHUAN", "KNOWLEDGE ADVENTURE")}
-          </span>
-          <h2>
-            {boss
-              ? c("Penjaga Kristal", "Crystal Guardian")
-              : t(lesson?.title ?? "")}
-          </h2>
-          <p>
-            {boss
-              ? c(
-                  "Lima serangan tepat akan memulihkan cahaya pulau. Dua kesalahan menghabiskan perisaimu. Kamu bisa mencoba lagi.",
-                  "Five accurate hits will restore the island’s light. Two mistakes exhaust your shield. You can always retry.",
-                )
-              : c(
-                  "Pahami idenya, coba kuisnya, lalu buka langkah berikutnya.",
-                  "Understand the idea, try the quiz, then unlock your next step.",
-                )}
-          </p>
-          {boss ? (
-            <div
-              className={`crystal-arena ${checked ? (choice === question?.answer ? "guardian-hit" : "player-hit") : ""}`}
-              aria-label={c(
-                "Penjaga kristal di arena",
-                "Crystal guardian in the arena",
+        {boss ? (
+          <BossArena
+            bossHP={battle.bossHP}
+            playerHP={battle.playerHP}
+            attack={
+              checked
+                ? choice === question?.answer
+                  ? "qwi"
+                  : "guardian"
+                : null
+            }
+            turn={answers.length}
+            onHelp={() => setTutor(true)}
+          />
+        ) : (
+          <aside className="session-story">
+            <span className="learning-eyebrow">
+              {c("PETUALANGAN PENGETAHUAN", "KNOWLEDGE ADVENTURE")}
+            </span>
+            <h2>{t(lesson?.title ?? "")}</h2>
+            <p>
+              {c(
+                "Pahami idenya, coba kuisnya, lalu buka langkah berikutnya.",
+                "Understand the idea, try the quiz, then unlock your next step.",
               )}
-            >
-              <div className="arena-ring" />
-              <div className="crystal-guardian">
-                <div className="guardian-crown">♛</div>
-                <div className="crystal-body">
-                  <i />
-                  <i />
-                  <i />
-                  <i />
-                </div>
-                <div className="guardian-eyes">◆ ◆</div>
-              </div>
-              <img
-                className="arena-qwi"
-                src="/assets/mascot-transparent.webp"
-                alt="Qwi"
-              />
-              <div className="arena-sparkles">✦ · ✧ · ✦</div>
-            </div>
-          ) : (
+            </p>
             <img
               className="lesson-qwi"
               src="/assets/mascot-transparent.webp"
               alt="Qwi"
             />
-          )}
-          {boss ? (
-            <div className="battle-meters">
-              <div>
-                <b>
-                  <Shield size={16} /> {c("Penjaga", "Guardian")}{" "}
-                  {battle.bossHP}/100
-                </b>
-                <ProgressBar value={battle.bossHP} />
-              </div>
-              <div>
-                <b>
-                  <Heart size={16} /> Qwi {battle.playerHP}/100
-                </b>
-                <ProgressBar value={battle.playerHP} />
-              </div>
-            </div>
-          ) : (
             <div className="learning-rules">
               <span>
                 <Check size={16} />
@@ -247,13 +223,13 @@ export function LearningSession({
                 {c("Boleh mengulang tanpa penalti", "Retry without penalty")}
               </span>
             </div>
-          )}
-          <button className="tutor-launch" onClick={() => setTutor(true)}>
-            <Lightbulb size={20} />
-            {c("Minta bantuan Qwi", "Ask Qwi for help")}
-            <span>↗</span>
-          </button>
-        </aside>
+            <button className="tutor-launch" onClick={() => setTutor(true)}>
+              <Lightbulb size={20} />
+              {c("Minta bantuan Qwi", "Ask Qwi for help")}
+              <span>↗</span>
+            </button>
+          </aside>
+        )}
         <main className="session-content">
           {phase === "read" && (
             <motion.article
@@ -356,15 +332,22 @@ export function LearningSession({
                   role="status"
                 >
                   <b>
-                    {choice === question.answer
-                      ? c(
-                          "Tepat! Pemahamanmu bertambah.",
-                          "Correct! Your understanding is growing.",
-                        )
-                      : c(
-                          "Belum tepat. Mari pelajari langkahnya.",
-                          "Not quite. Let’s learn the steps.",
-                        )}
+                    {boss
+                      ? choice === question.answer
+                        ? c("Serangan tepat!", "A perfect hit!")
+                        : c(
+                            "Belum tepat. Perhatikan pembahasannya.",
+                            "Not quite. Learn from this.",
+                          )
+                      : choice === question.answer
+                        ? c(
+                            "Tepat! Pemahamanmu bertambah.",
+                            "Correct! Your understanding is growing.",
+                          )
+                        : c(
+                            "Belum tepat. Mari pelajari langkahnya.",
+                            "Not quite. Let’s learn the steps.",
+                          )}
                   </b>
                   <p>{question.explanation[language]}</p>
                   {boss && (
@@ -378,17 +361,19 @@ export function LearningSession({
               )}
               <button
                 className="primary-button"
-                disabled={!checked && choice === null}
+                disabled={attacking || (!checked && choice === null)}
                 onClick={checked ? advance : check}
               >
-                {checked
-                  ? (boss && battle.finished) ||
-                    answers.length === questions.length
-                    ? c("Lihat hasil", "See results")
-                    : c("Soal berikutnya", "Next question")
-                  : boss
-                    ? c("Kirim serangan", "Launch attack")
-                    : c("Periksa jawaban", "Check answer")}
+                {attacking
+                  ? c("Serangan berlangsung…", "Attack in progress…")
+                  : checked
+                    ? (boss && battle.finished) ||
+                      answers.length === questions.length
+                      ? c("Lihat hasil", "See results")
+                      : c("Soal berikutnya", "Next question")
+                    : boss
+                      ? c("Kirim serangan", "Launch attack")
+                      : c("Periksa jawaban", "Check answer")}
                 {boss ? <Swords size={18} /> : <ArrowRight size={18} />}
               </button>
             </article>
