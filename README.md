@@ -18,7 +18,7 @@ npm run build
 npm run preview
 ```
 
-Build menghasilkan `dist/` dan `dist-server/`, dengan pemeriksaan TypeScript frontend dan server. Gunakan Node.js 20.19+ atau 22.12+. `npm run preview` hanya untuk frontend tanpa API; untuk paket frontend + AI gunakan `npm start` setelah build.
+Build menghasilkan `dist/` dan `dist-server/`, dengan pemeriksaan TypeScript frontend dan server. Gunakan Node.js 20.19+ atau 22.12+. `npm run preview` hanya untuk frontend tanpa API; untuk paket frontend + AI gunakan `npm start`, yang otomatis menjalankan build terlebih dahulu.
 
 ## Menjalankan di komputer lain melalui GitHub
 
@@ -134,10 +134,9 @@ npm run dev
 
 Buka http://localhost:5174. Pada materi, buka Tutor Qwi dan pilih **AI generatif**, atau gulir ke **Tantangan baru dari AI** untuk membuat tiga soal. Jika key belum diisi/server belum berjalan, mode lokal dan kuis utama tetap tersedia. Sesudah mengubah `.env`, mulai ulang server AI dan buka ulang panel/halaman.
 
-Untuk menjalankan hasil build dengan satu server lokal:
+Untuk menjalankan frontend dan AI dengan satu server lokal (build otomatis):
 
 ```powershell
-npm run build
 npm start
 ```
 
@@ -154,3 +153,9 @@ Kanvas Matematika kini menutup seluruh viewport peta tanpa bidang buram di kiri/
 Lapisan dekoratif terpisah menambahkan awan melintas, tiga kawanan burung dengan kepakan sayap, cahaya kristal, kilau air dan kabut air terjun. Jalan, gambar dasar dan titik materi tidak digerakkan oleh animasi suasana. Lapisan tidak menangkap input. Animasi berhenti sementara saat tab tersembunyi atau panel belajar terbuka, dan menghormati pengaturan Kurangi animasi serta preferensi sistem.
 
 Tes ukuran mencakup delapan viewport, termasuk 1366×574, 1920×1004, 3440×1364, 390×778 dan 320×480: kanvas menutup kedua sumbu, rasio tetap, dan kamera dapat menjangkau semua pos. Build dan tes lulus; pemeriksaan visual browser tetap belum tersedia karena akses browser lokal Work dinonaktifkan.
+
+## Jika port 5075 menampilkan server_error
+
+Pada versi lama, membuka port 5075 tanpa folder `dist/` menghasilkan error generik. Setelah clone baru, folder hasil build belum ada karena tidak disimpan di GitHub. Ambil perbaikan terbaru dengan `git pull --ff-only`, hentikan server lama dengan Ctrl+C, lalu jalankan `npm start` dari folder proyek. Perintah ini sekarang membangun frontend dan server secara otomatis sebelum menjalankan aplikasi.
+
+Jika hanya menjalankan `npm run ai`, buka frontend melalui terminal kedua dengan `npm run dev` dan alamat http://localhost:5174. Tanpa build frontend, port 5075 kini menampilkan halaman petunjuk, bukan JSON error generik. Lokasi `.env` dan `dist/` dihitung dari lokasi server yang dibangun, bukan dari working directory terminal. Perbaikan ini tidak memerlukan perubahan API key.

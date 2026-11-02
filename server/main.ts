@@ -1,10 +1,13 @@
 import { createServer } from "node:http";
-import { readFile, realpath, stat } from "node:fs/promises";
-import { resolve, extname, sep } from "node:path";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { ApiError, createAiService } from "./service";
 import { validateOrigin } from "./security";
+import { frontendResponse } from "./frontend";
+// The bundled file lives in dist-server/, independent of the launch directory.
+const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 try {
-  process.loadEnvFile(resolve(".env"));
+  process.loadEnvFile(resolve(projectRoot, ".env"));
 } catch (error) {
   if ((error as NodeJS.ErrnoException).code !== "ENOENT")
     throw new Error("Cannot load .env configuration");
@@ -20,16 +23,6 @@ const service = createAiService({
   model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
   dailyLimit,
 });
-const mime: Record<string, string> = {
-  ".html": "text/html; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".json": "application/json",
-  ".webp": "image/webp",
-  ".png": "image/png",
-  ".woff2": "font/woff2",
-  ".svg": "image/svg+xml",
-};
 const server = createServer(async (req, res) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("Referrer-Policy", "same-origin");
@@ -68,26 +61,16 @@ const server = createServer(async (req, res) => {
       }
       return send(200, await service.handle(req.method ?? "GET", path, body));
     }
-    if (req.method !== "GET" && req.method !== "HEAD")
-      throw new ApiError(405, "method_not_allowed");
-    const root = await realpath(resolve("dist"));
-    let file = resolve(root, "." + decodeURIComponent(path));
-    if (file !== root && !file.startsWith(root + sep))
-      throw new ApiError(404, "not_found");
-    try {
-      if (!(await stat(file)).isFile()) file = resolve(root, "index.html");
-    } catch {
-      if (extname(path)) throw new ApiError(404, "not_found");
-      file = resolve(root, "index.html");
-    }
-    file = await realpath(file);
-    if (!file.startsWith(root + sep)) throw new ApiError(404, "not_found");
-    const content = req.method === "HEAD" ? undefined : await readFile(file);
-    res.writeHead(200, {
-      "Content-Type": mime[extname(file)] ?? "application/octet-stream",
+    const frontend = await frontendResponse(
+      path,
+      resolve(projectRoot, "dist"),
+      req.method ?? "GET",
+    );
+    res.writeHead(frontend.status, {
+      "Content-Type": frontend.type,
       "Cache-Control": "no-cache",
     });
-    res.end(content);
+    res.end(frontend.body);
   } catch (error) {
     if (error instanceof ApiError)
       return send(error.status, { error: error.code });

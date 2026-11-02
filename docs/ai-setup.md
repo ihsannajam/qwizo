@@ -19,7 +19,7 @@ Server `.env` tidak menggunakan awalan `VITE_`, tidak disalin ke `dist`, dan dia
 - `npm run ai`: build dan jalankan server pada 127.0.0.1:5075.
 - `npm run dev`: frontend Vite port 5174 dengan proxy `/api/ai` ke server lokal. Port mengikuti `AI_PORT` pada `.env`; restart Vite jika port diubah.
 - `npm run build`: periksa TypeScript frontend/server, buat `dist/` dan `dist-server/`.
-- `npm start`: jalankan server hasil build; frontend dan API tersedia pada http://127.0.0.1:5075.
+- `npm start`: bangun ulang frontend/server secara otomatis, lalu jalankan server; frontend dan API tersedia pada http://127.0.0.1:5075.
 - `npm run preview`: preview frontend saja; bukan server AI.
 
 Server mendengarkan loopback dan memeriksa Origin/Host. Ini konfigurasi lokal satu pengguna; sebelum deployment publik, tambahkan autentikasi, kuota per pengguna dan penyimpanan server. Jangan membuka port langsung ke internet hanya untuk mengaktifkan AI.
@@ -49,7 +49,7 @@ Request model memakai `store:false`. Pesan/konteks dikirim ke OpenAI ketika peng
 
 ## Pengujian
 
-`npm test` menambahkan 11 kelompok pemeriksaan AI dengan provider tiruan: key kosong, konteks bahasa/riwayat, petunjuk semua soal aktif, request salah, tidak bocor key jawaban sebelum grading, grading ulang, expired/malformed output, limit/concurrency, Origin/Host, bentuk request Responses dan error/refusal/incomplete. Tidak ada API berbayar yang dipanggil dalam tes.
+`npm test` menambahkan 14 kelompok pemeriksaan AI/server dengan provider tiruan: key kosong, konteks bahasa/riwayat, petunjuk semua soal aktif, request salah, tidak bocor key jawaban sebelum grading, grading ulang, expired/malformed output, limit/concurrency, Origin/Host, bentuk request Responses dan error/refusal/incomplete. Tidak ada API berbayar yang dipanggil dalam tes.
 
 Build frontend/server telah diverifikasi. Tes browser interaktif masih terhalang pengaturan akses browser lokal Work. Permintaan smoke test HTTP ke loopback juga dibatasi/tidak tersambung dari lingkungan eksekusi, sehingga pemeriksaan HTTP runtime belum dinyatakan lulus. Setelah key diisi, masih perlu smoke test nyata: status AI, satu percakapan, satu generasi latihan, penilaian, dan melihat konsumsi di API Platform.
 
@@ -61,3 +61,11 @@ Build frontend/server telah diverifikasi. Tes browser interaktif masih terhalang
 - Model awal: https://developers.openai.com/api/docs/models/gpt-4.1-mini
 - Kredit API pelanggan yang memenuhi syarat: https://developers.openai.com/api/docs/guides/chatgpt-api-credits
 - Alternatif Sign in with ChatGPT: https://developers.openai.com/siwc/token-sharing-open-source (jalur integrasi lain, belum diterapkan dalam versi ini)
+
+## Halaman utama port 5075 dan fresh clone
+
+`npm run ai` membangun server saja. Frontend untuk port 5075 memerlukan `dist/index.html`; pada clone baru file ini belum tersedia. Versi lama mengubah kegagalan file tersebut menjadi `server_error` generik. Versi terbaru menyediakan halaman instruksi berstatus 503 ketika folder/file frontend belum dibangun.
+
+`npm start` kini memiliki tahap prestart yang menjalankan build frontend/server, sehingga satu perintah cukup untuk menjalankan paket lokal. `server/main.ts` memakai lokasi bundel untuk mencari folder proyek dan `.env`; menjalankan berkas dari folder terminal berbeda tidak mengalihkan lokasi konfigurasi.
+
+Tiga pengujian tambahan memakai fixture sementara di dalam workspace: dist/index yang hilang menghasilkan halaman petunjuk; build normal melayani root, route SPA, aset dan HEAD dari working directory berbeda; aset hilang, path privat, encoding rusak dan metode POST ditolak dengan status yang sesuai. Tes ini memanggil penanganan file secara langsung dan tidak membutuhkan jaringan atau API key.

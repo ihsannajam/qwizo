@@ -1,4 +1,7 @@
 import assert from "node:assert/strict";
+import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { frontendResponse } from "../server/frontend";
 import {
   ApiError,
   createAiService,
@@ -331,6 +334,75 @@ await test("Provider errors, refusals and incomplete output expose only safe err
         ),
     )(request),
     errorCode("ai_refused"),
+  );
+});
+const frontendFixture = await mkdtemp(resolve("tmp/tests/frontend-"));
+await test("Fresh clones and incomplete builds return actionable HTML instead of server_error", async () => {
+  const directory = resolve(frontendFixture, "dist");
+  const missing = await frontendResponse("/", directory);
+  assert.equal(missing.status, 503);
+  assert.ok(missing.type.startsWith("text/html"));
+  assert.ok(missing.body?.toString().includes("npm start"));
+  assert.ok(missing.body?.toString().includes("npm run dev"));
+  assert.ok(!missing.body?.toString().includes("server_error"));
+  await mkdir(directory);
+  const incomplete = await frontendResponse("/island/mathematics", directory);
+  assert.equal(incomplete.status, 503);
+  assert.equal(
+    (await frontendResponse("/", directory, "HEAD")).body,
+    undefined,
+  );
+});
+await test("Built frontend serves root, SPA routes, assets and HEAD independently of working directory", async () => {
+  const directory = resolve(frontendFixture, "built");
+  await mkdir(resolve(directory, "assets"), { recursive: true });
+  await writeFile(
+    resolve(directory, "index.html"),
+    "<!doctype html><title>Qwizo test</title>",
+  );
+  await writeFile(
+    resolve(directory, "assets", "app.js"),
+    "console.log('Qwizo')",
+  );
+  const previous = process.cwd();
+  try {
+    process.chdir(frontendFixture);
+    for (const path of ["/", "/world", "/island/mathematics"]) {
+      const page = await frontendResponse(path, directory);
+      assert.equal(page.status, 200);
+      assert.ok(page.body?.toString().includes("Qwizo test"));
+    }
+    const script = await frontendResponse("/assets/app.js", directory);
+    assert.equal(script.status, 200);
+    assert.ok(script.type.startsWith("text/javascript"));
+    assert.ok(script.body?.toString().includes("console.log"));
+    const head = await frontendResponse("/", directory, "HEAD");
+    assert.equal(head.status, 200);
+    assert.equal(head.body, undefined);
+  } finally {
+    process.chdir(previous);
+  }
+});
+await test("Static serving rejects missing assets, private paths, malformed encoding and POST", async () => {
+  const directory = resolve(frontendFixture, "built");
+  await writeFile(resolve(directory, ".env"), "fake-private-fixture");
+  for (const path of [
+    "/assets/missing.js",
+    "/.env",
+    "/../.env",
+    "/%2e%2e%5c.env",
+  ])
+    await assert.rejects(
+      frontendResponse(path, directory),
+      errorCode("not_found"),
+    );
+  await assert.rejects(
+    frontendResponse("/%E0%A4%A", directory),
+    errorCode("invalid_path"),
+  );
+  await assert.rejects(
+    frontendResponse("/", directory, "POST"),
+    errorCode("method_not_allowed"),
   );
 });
 console.log(
