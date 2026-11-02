@@ -70,7 +70,11 @@ export function TutorPanel({
       );
       if (!controller.signal.aborted)
         setMessages((m) => [
-          ...m,
+          ...m.map((turn, i) =>
+            i === m.length - 1 && turn.role === "you"
+              ? { ...turn, source: response.source }
+              : turn,
+          ),
           { role: "qwi", text: response.reply, source: response.source },
         ]);
     } catch (error) {

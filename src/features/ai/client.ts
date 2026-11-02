@@ -78,6 +78,10 @@ export async function aiRequest<T>(
 export function aiErrorMessage(error: unknown, language: "id" | "en") {
   const code = error instanceof AiClientError ? error.code : "ai_unavailable";
   const messages: Record<string, [string, string]> = {
+    ai_out_of_scope: [
+      "Soal AI keluar dari materi yang sedang dibuka dan tidak ditampilkan. Coba buat soal lagi untuk materi ini.",
+      "The AI practice went outside the current lesson and was not shown. Try generating practice for this lesson again.",
+    ],
     chatgpt_sign_in_required: [
       "Masuk kembali dengan ChatGPT untuk melanjutkan.",
       "Sign in again with ChatGPT to continue.",

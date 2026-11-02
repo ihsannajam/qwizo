@@ -34,8 +34,11 @@ export function chatgptCall(
           },
         }),
         signal: signal
-          ? AbortSignal.any([signal, AbortSignal.timeout(45000)])
-          : AbortSignal.timeout(45000),
+          ? AbortSignal.any([
+              signal,
+              AbortSignal.timeout(request.timeoutMs ?? 45000),
+            ])
+          : AbortSignal.timeout(request.timeoutMs ?? 45000),
       });
     } catch {
       if (signal?.aborted) throw new ApiError(409, "chatgpt_account_changed");
