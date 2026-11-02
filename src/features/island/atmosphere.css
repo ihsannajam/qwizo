@@ -1,0 +1,216 @@
+/* The scene covers both viewport axes; its image and all markers keep one 3:2 plane. */
+.trail-world {
+  min-height: 0;
+  isolation: isolate;
+}
+.trail-world:before {
+  display: none;
+}
+.trail-world .level-scroll {
+  display: block;
+  scrollbar-width: none;
+  overflow-anchor: none;
+  background: #b4dcec;
+}
+.trail-world .level-scroll::-webkit-scrollbar {
+  display: none;
+}
+.trail-world .level-terrain.authored-terrain {
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  isolation: isolate;
+}
+.trail-world .terrain-art {
+  pointer-events: none;
+}
+.island-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  contain: paint;
+  pointer-events: none;
+  user-select: none;
+}
+.island-atmosphere * {
+  pointer-events: none;
+}
+.island-sunlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 5% 7%, #fff4ba55, transparent 48%);
+  opacity: 0.4;
+  animation: island-sun-breathe 16s ease-in-out infinite;
+}
+.island-cloud {
+  position: absolute;
+  left: -36%;
+  width: 34%;
+  height: 15%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 30% 55%, #fff8f0aa, transparent 50%),
+    radial-gradient(ellipse at 65% 50%, #f5f0ff99, transparent 55%);
+  opacity: 0.38;
+  animation: island-cloud-drift 68s linear infinite;
+}
+.island-cloud-high {
+  top: 7%;
+  animation-delay: -24s;
+}
+.island-cloud-low {
+  top: 70%;
+  opacity: 0.24;
+  animation-duration: 87s;
+  animation-delay: -62s;
+}
+.island-cloud-foreground {
+  top: 87%;
+  height: 20%;
+  opacity: 0.5;
+  animation-duration: 96s;
+  animation-delay: -8s;
+}
+.island-bird-flock {
+  position: absolute;
+  top: 17%;
+  left: -130px;
+  width: 110px;
+  height: 46px;
+  color: #50446d;
+  opacity: 0.6;
+  animation: island-bird-flight 39s linear infinite;
+  animation-delay: -8s;
+}
+.island-bird-flock svg {
+  width: 100%;
+  height: 100%;
+}
+.island-bird-flock.flock-1 {
+  top: 43%;
+  opacity: 0.4;
+  animation-duration: 53s;
+  animation-delay: -30s;
+}
+.island-bird-flock.flock-2 {
+  top: 79%;
+  opacity: 0.5;
+  animation-duration: 47s;
+  animation-delay: -17s;
+}
+.island-bird-wings {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: island-wing-flap 1.1s ease-in-out infinite;
+}
+.island-bird-wings.wings-1 {
+  animation-delay: -0.4s;
+}
+.island-bird-wings.wings-2 {
+  animation-delay: -0.7s;
+}
+.island-crystal-light {
+  position: absolute;
+  translate: -50% -50%;
+  font-size: clamp(16px, 1.8vw, 30px);
+  color: #fff4ff;
+  text-shadow: 0 0 9px #edb1ff;
+  opacity: 0.18;
+  animation: island-crystal-shine 7s ease-in-out infinite;
+}
+.island-water-light {
+  position: absolute;
+  width: 4.5%;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #efffffdd, transparent 72%);
+  opacity: 0.25;
+  animation: island-water-shimmer 6s ease-in-out infinite;
+}
+.island-waterfall-mist {
+  position: absolute;
+  width: 10%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #ecffff66, transparent 70%);
+  opacity: 0.4;
+  animation: island-mist-rise 12s ease-in-out infinite;
+}
+.mist-upper {
+  left: 55%;
+  top: 45%;
+}
+.mist-lower {
+  left: 44%;
+  top: 86%;
+  animation-delay: -7s;
+}
+@keyframes island-cloud-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(440%, -10%, 0);
+  }
+}
+@keyframes island-bird-flight {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--island-flight-distance) * 0.5), -28px, 0);
+  }
+  100% {
+    transform: translate3d(var(--island-flight-distance), 4px, 0);
+  }
+}
+@keyframes island-wing-flap {
+  50% {
+    transform: scaleY(0.38);
+  }
+}
+@keyframes island-sun-breathe {
+  50% {
+    opacity: 0.7;
+  }
+}
+@keyframes island-crystal-shine {
+  50% {
+    opacity: 0.7;
+    transform: scale(1.12);
+  }
+}
+@keyframes island-water-shimmer {
+  50% {
+    opacity: 0.62;
+    transform: translate3d(5px, 3px, 0) scaleX(1.18);
+  }
+}
+@keyframes island-mist-rise {
+  50% {
+    opacity: 0.6;
+    transform: translate3d(10px, -12px, 0) scale(1.12);
+  }
+}
+.atmosphere-paused * {
+  animation-play-state: paused !important;
+}
+.reduce-motion .island-atmosphere * {
+  animation: none !important;
+}
+.reduce-motion .island-atmosphere .island-bird-flock,
+.reduce-motion .island-atmosphere .island-cloud {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .island-atmosphere * {
+    animation: none !important;
+  }
+  .island-atmosphere .island-bird-flock,
+  .island-atmosphere .island-cloud {
+    display: none;
+  }
+}

@@ -27,6 +27,11 @@ import { TutorPanel } from "../src/features/learning/TutorPanel";
 import { newSession, sessionReducer } from "../src/features/learning/session";
 import { tutorReply } from "../src/features/learning/tutor";
 import { useGame } from "../src/store/game";
+import {
+  getTerrainSize,
+  getTerrainFocus,
+} from "../src/features/island/terrain-layout";
+import { stopPoints } from "../src/features/island/data/trail";
 
 let checks = 0;
 function check(name: string, run: () => void) {
@@ -39,6 +44,39 @@ const perfect = (index: number) =>
   curriculum[index].questions.map((q) => q.answer);
 const wrong = (index: number) =>
   curriculum[index].questions.map((q) => (q.answer + 1) % 4);
+check(
+  "Terrain covers wide, portrait and mobile viewports without stretching or unreachable stops",
+  () => {
+    for (const [width, height] of [
+      [1366, 574],
+      [1920, 1004],
+      [2560, 1364],
+      [3440, 1364],
+      [390, 778],
+      [844, 324],
+      [768, 1100],
+      [320, 480],
+    ]) {
+      const size = getTerrainSize(width, height);
+      assert.ok(
+        size.width >= width && size.height >= height,
+        `Uncovered viewport ${width}x${height}`,
+      );
+      assert.ok(Math.abs(size.width / size.height - 1.5) < 1e-10);
+      for (const point of stopPoints) {
+        const focus = getTerrainFocus(size, width, height, point);
+        assert.ok(focus.left >= 0 && focus.left <= size.width - width);
+        assert.ok(focus.top >= 0 && focus.top <= size.height - height);
+        const x = (point[0] / 1536) * size.width - focus.left,
+          y = (point[1] / 1024) * size.height - focus.top;
+        assert.ok(
+          x >= 0 && x <= width && y >= 0 && y <= height,
+          "Stop is outside the focused viewport",
+        );
+      }
+    }
+  },
+);
 check(
   "Quiz lifecycle blocks empty/double answers and resets cleanly on retry",
   () => {

@@ -36,6 +36,8 @@ import {
   TERRAIN,
 } from "./data/trail";
 import { TopicPanel } from "./TopicPanel";
+import { IslandAtmosphere } from "./IslandAtmosphere";
+import { getTerrainSize, getTerrainFocus } from "./terrain-layout";
 import "./island.css";
 export function MathIsland() {
   const travel = useIslandTravel();
@@ -54,6 +56,15 @@ export function MathIsland() {
   const [overview, setOverview] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [destination, setDestination] = useState<string | null>(null);
+  const [terrainSize, setTerrainSize] = useState(() =>
+    typeof window === "undefined"
+      ? { width: 1536, height: 1024 }
+      : getTerrainSize(
+          window.innerWidth,
+          window.innerHeight - (window.innerWidth < 768 ? 66 : 76),
+        ),
+  );
+  const [pageHidden, setPageHidden] = useState(document.hidden);
   const scroll = useRef<HTMLDivElement>(null);
   const terrain = useRef<HTMLDivElement>(null);
   const drag = useRef<{
@@ -69,6 +80,11 @@ export function MathIsland() {
     topics.some((topic) => topic.lessons.some((l) => l.id === id)),
   ).length;
   useEffect(() => {
+    const onVisibility = () => setPageHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+  useEffect(() => {
     alive.current = true;
     return () => {
       alive.current = false;
@@ -80,12 +96,21 @@ export function MathIsland() {
       canvas = terrain.current;
     if (!pane || !canvas) return;
     const center = () => {
+      const size = getTerrainSize(pane.clientWidth, pane.clientHeight);
+      setTerrainSize((current) =>
+        current.width === size.width && current.height === size.height
+          ? current
+          : size,
+      );
       if (walking.current) return;
-      const [x, y] = getStopPoint(positionRef.current);
-      pane.scrollLeft =
-        (x / TERRAIN.width) * canvas.clientWidth - pane.clientWidth * 0.5;
-      pane.scrollTop =
-        (y / TERRAIN.height) * canvas.clientHeight - pane.clientHeight * 0.55;
+      const focus = getTerrainFocus(
+        size,
+        pane.clientWidth,
+        pane.clientHeight,
+        getStopPoint(positionRef.current),
+      );
+      pane.scrollLeft = focus.left;
+      pane.scrollTop = focus.top;
     };
     const observer = new ResizeObserver(center);
     observer.observe(pane);
@@ -237,12 +262,17 @@ export function MathIsland() {
         <motion.div
           className="level-terrain authored-terrain"
           ref={terrain}
+          style={{ width: terrainSize.width, height: terrainSize.height }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
           <div className="terrain-art" />
           <div className="terrain-haze" />
+          <IslandAtmosphere
+            width={terrainSize.width}
+            paused={pageHidden || !!selected || !!session || overview}
+          />
           {topics.map((topic, i) => {
             const [x, y] = getStopPoint(topic.id);
             const done = topic.lessons.filter((l) =>

@@ -108,7 +108,7 @@ public/assets/                    Sprite, peta, maskot dan logo lokal
 
 ## Validasi dan batasan
 
-`npm test` memeriksa 36 perjalanan Qwi, kelengkapan terjemahan 24 materi, serta 14 kelompok pemeriksaan MVP: 72 soal, transisi sesi, tutor sebelum/sesudah menjawab, migrasi, penyimpanan, kelulusan, unlock, reward ganda, mastery, level, misi, streak dan kemenangan/kekalahan boss. Komponen 24 materi, topik, tutor dan arena dirender melalui server untuk memeriksa error runtime awal.
+`npm test` memeriksa 36 perjalanan Qwi, kelengkapan terjemahan 24 materi, serta 15 kelompok pemeriksaan MVP: 72 soal, transisi sesi, tutor sebelum/sesudah menjawab, migrasi, penyimpanan, kelulusan, unlock, reward ganda, mastery, level, misi, streak dan kemenangan/kekalahan boss. Komponen 24 materi, topik, tutor dan arena dirender melalui server untuk memeriksa error runtime awal.
 
 Build TypeScript/Vite diverifikasi. **Pengujian browser interaktif dan inspeksi visual pembaruan v0.3 belum dapat dilakukan karena akses browser lokal dinonaktifkan di pengaturan Work.** Screenshot lama di `docs/screenshots/` adalah referensi versi sebelumnya, bukan bukti pengujian v0.3.
 
@@ -146,3 +146,11 @@ Buka http://127.0.0.1:5075. Server melayani frontend hasil build sekaligus API. 
 Latihan AI merupakan latihan bebas tanpa XP/unlock. Jawaban benar disimpan sementara di server dan baru dikirim pada hasil penilaian. Pemeriksaan format tidak menjamin kebenaran matematika; tetap perlu review konten. Percobaan kedaluwarsa setelah 20 menit atau ketika server dimulai ulang.
 
 Batas lokal awal: 100 permintaan model per hari UTC per proses, 20 per 10 menit, maksimum dua bersamaan. Batas proses hilang saat restart; tetapkan juga anggaran project di API Platform. Semua pengujian AI memakai provider tiruan tanpa biaya; API nyata dan pemeriksaan UI browser belum diverifikasi. Detail: [docs/ai-setup.md](docs/ai-setup.md).
+
+## Peta Matematika fullscreen dan suasana hidup
+
+Kanvas Matematika kini menutup seluruh viewport peta tanpa bidang buram di kiri/kanan. Gambar tetap proporsional 3:2; ukuran dihitung dari lebar dan tinggi area tampilan. Pada layar dengan rasio berbeda, peta dapat digeser untuk menjelajahi seluruh dunia. Titik materi dan rute Qwi tetap menggunakan koordinat ilustrasi yang sama.
+
+Lapisan dekoratif terpisah menambahkan awan melintas, tiga kawanan burung dengan kepakan sayap, cahaya kristal, kilau air dan kabut air terjun. Jalan, gambar dasar dan titik materi tidak digerakkan oleh animasi suasana. Lapisan tidak menangkap input. Animasi berhenti sementara saat tab tersembunyi atau panel belajar terbuka, dan menghormati pengaturan Kurangi animasi serta preferensi sistem.
+
+Tes ukuran mencakup delapan viewport, termasuk 1366×574, 1920×1004, 3440×1364, 390×778 dan 320×480: kanvas menutup kedua sumbu, rasio tetap, dan kamera dapat menjangkau semua pos. Build dan tes lulus; pemeriksaan visual browser tetap belum tersedia karena akses browser lokal Work dinonaktifkan.
