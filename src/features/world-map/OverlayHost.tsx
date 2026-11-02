@@ -312,11 +312,11 @@ export function OverlayHost() {
               </div>
               <div className="info-box">
                 <h3>{t("Tentang prototype")}</h3>
-                <p>Qwizo · v0.2.0</p>
+                <p>Qwizo · v0.3.0</p>
                 <p>
                   {c(
-                    "MVP lokal: progres berasal dari kuis, tutor memakai panduan terstruktur, dan arena dapat dimainkan. Belum ada akun server atau layanan AI langsung.",
-                    "Local MVP: quiz-based progress, a structured tutor, and a playable arena. Server accounts and live AI are not connected yet.",
+                    "Progres kuis tersimpan lokal. Tutor dan latihan AI tersedia jika layanan AI diaktifkan; panduan lokal tetap tersedia. Belum ada sinkronisasi akun.",
+                    "Quiz progress is saved locally. AI tutoring and practice are available when the AI service is enabled; local guidance remains available. Account sync is not connected yet.",
                   )}
                 </p>
               </div>

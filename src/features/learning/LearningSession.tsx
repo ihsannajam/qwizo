@@ -21,6 +21,7 @@ import { bossQuestions, curriculum, findUnit } from "./curriculum";
 import { topics } from "../island/data/topics";
 import { TutorPanel } from "./TutorPanel";
 import { newSession, sessionReducer } from "./session";
+import { AiPractice } from "../ai/AiPractice";
 
 export function LearningSession({
   id,
@@ -48,6 +49,7 @@ export function LearningSession({
   const [result, setResult] = useState<Outcome | null>(null);
   const [tutor, setTutor] = useState(false);
   const [exit, setExit] = useState(false);
+  const [aiActive, setAiActive] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const submitting = useRef(false);
@@ -56,7 +58,9 @@ export function LearningSession({
   const battle = battleStatus(boss ? answers : []);
   const nextUnit = curriculum[curriculum.findIndex((u) => u.id === id) + 1];
   const requestClose = () =>
-    phase === "quiz" && answers.length > 0 ? setExit(true) : close();
+    (phase === "quiz" && answers.length > 0) || aiActive
+      ? setExit(true)
+      : close();
   useEffect(() => {
     const previous = document.activeElement;
     stage.current?.focus();
@@ -69,13 +73,13 @@ export function LearningSession({
     heading.current?.focus();
   }, [phase, index]);
   useEffect(() => {
-    if (phase !== "quiz" || !answers.length) return;
+    if ((phase !== "quiz" || !answers.length) && !aiActive) return;
     const warn = (e: BeforeUnloadEvent) => {
       e.preventDefault();
     };
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);
-  }, [phase, answers.length]);
+  }, [phase, answers.length, aiActive]);
   const check = () => {
     if (choice === null || checked || submitting.current) return;
     dispatch({ type: "check" });
@@ -285,6 +289,7 @@ export function LearningSession({
               </div>
               <button
                 className="primary-button"
+                disabled={aiActive}
                 onClick={() => {
                   game.readLesson(id);
                   dispatch({ type: "start" });
@@ -299,6 +304,15 @@ export function LearningSession({
                   "3 questions • No time limit • Help is always available",
                 )}
               </small>
+              {aiActive && (
+                <small className="session-note">
+                  {c(
+                    "Selesaikan atau buang latihan AI sebelum memulai kuis utama.",
+                    "Finish or discard AI practice before starting the main quiz.",
+                  )}
+                </small>
+              )}
+              <AiPractice lessonId={id} onActiveChange={setAiActive} />
             </motion.article>
           )}
           {phase === "quiz" && question && (

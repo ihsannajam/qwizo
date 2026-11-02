@@ -1,6 +1,6 @@
-# Qwizo! — MVP Frontend v0.2
+# Qwizo! — MVP + AI Server v0.3
 
-Petualangan belajar Matematika dengan World Map 2.5D, 24 materi, 72 soal, tutor Qwi terstruktur, dan arena Penjaga Kristal. React + TypeScript strict + Vite + Tailwind + React Router + Zustand + Motion. Seluruh data disimpan lokal pada browser; tidak memerlukan backend atau kunci API.
+Petualangan belajar Matematika dengan World Map 2.5D, 24 materi, 72 soal, tutor Qwi terstruktur, dan arena Penjaga Kristal. React + TypeScript strict + Vite + Tailwind + React Router + Zustand + Motion. Progres inti disimpan lokal pada browser dan tetap dapat dimainkan tanpa kunci API. Mode AI opsional memakai server Node.js dan OpenAI Responses API.
 
 ## Menjalankan
 
@@ -18,7 +18,7 @@ npm run build
 npm run preview
 ```
 
-Build menghasilkan `dist/`. Hosting SPA membutuhkan fallback ke `index.html`. Gunakan Node.js 20.19+ atau 22.12+.
+Build menghasilkan `dist/` dan `dist-server/`, dengan pemeriksaan TypeScript frontend dan server. Gunakan Node.js 20.19+ atau 22.12+. `npm run preview` hanya untuk frontend tanpa API; untuk paket frontend + AI gunakan `npm start` setelah build.
 
 ## Menjalankan di komputer lain melalui GitHub
 
@@ -42,7 +42,7 @@ GitHub menyimpan kode sumber; unggahan repository saja belum menghasilkan websit
 3. Baca materi → konsep, cara berpikir, contoh bertahap → kuis tiga soal.
 4. Pilih jawaban, periksa, baca umpan balik, lanjutkan hingga hasil.
 5. Dua dari tiga benar berarti lulus. Materi berikutnya terbuka, hadiah pertama masuk, dan skor terbaik tersimpan.
-6. Gunakan Qwi Tutor pada materi/kuis: Konsep, Petunjuk, Pembahasan atau pertanyaan dengan kata kunci. Ini panduan lokal, bukan AI generatif. Pembahasan soal ditahan sampai jawaban diperiksa.
+6. Gunakan Qwi Tutor pada materi/kuis: Konsep, Petunjuk, Pembahasan atau pertanyaan dengan kata kunci. Mode panduan lokal tersedia tanpa API. Mode AI generatif tersedia pada materi jika layanan AI diaktifkan. Saat kuis utama aktif, hanya petunjuk terstruktur yang dipakai.
 7. Setelah 24 materi lulus, buka arena Penjaga Kristal. Lima jawaban tepat menghabiskan HP penjaga; dua kesalahan menghabiskan perisai Qwi. Ada hasil kemenangan/kekalahan, pembahasan dan ulangi.
 8. Kembali ke World Map untuk melihat level, penguasaan topik, streak, koin, lencana dan klaim misi harian.
 
@@ -110,8 +110,39 @@ public/assets/                    Sprite, peta, maskot dan logo lokal
 
 `npm test` memeriksa 36 perjalanan Qwi, kelengkapan terjemahan 24 materi, serta 14 kelompok pemeriksaan MVP: 72 soal, transisi sesi, tutor sebelum/sesudah menjawab, migrasi, penyimpanan, kelulusan, unlock, reward ganda, mastery, level, misi, streak dan kemenangan/kekalahan boss. Komponen 24 materi, topik, tutor dan arena dirender melalui server untuk memeriksa error runtime awal.
 
-Build TypeScript/Vite diverifikasi. **Pengujian browser interaktif dan inspeksi visual pembaruan v0.2 belum dapat dilakukan karena akses browser lokal dinonaktifkan di pengaturan Work.** Screenshot lama di `docs/screenshots/` adalah referensi versi sebelumnya, bukan bukti pengujian v0.2.
+Build TypeScript/Vite diverifikasi. **Pengujian browser interaktif dan inspeksi visual pembaruan v0.3 belum dapat dilakukan karena akses browser lokal dinonaktifkan di pengaturan Work.** Screenshot lama di `docs/screenshots/` adalah referensi versi sebelumnya, bukan bukti pengujian v0.3.
 
-Materi merupakan jalur fondasi Matematika enam topik, belum silabus kelas 12/UTBK yang telah direview guru. Backend, autentikasi nyata, AI generatif, model 3D penuh, kuis adaptif, audio, sembilan pulau lain, deployment dan pengujian perangkat sentuh fisik masih tahap lanjutan.
+Materi merupakan jalur fondasi Matematika enam topik, belum silabus kelas 12/UTBK yang telah direview guru. Backend akun/progres, autentikasi nyata, model 3D penuh, kuis adaptif, audio, sembilan pulau lain, deployment publik dan pengujian perangkat sentuh fisik masih tahap lanjutan. Integrasi AI telah disiapkan, tetapi koneksi model nyata memerlukan API key dan kuota akun pemilik.
 
 Keputusan dan checklist uji manual: [docs/mvp-learning.md](docs/mvp-learning.md). Referensi historis: [docs/visual-update.md](docs/visual-update.md), [docs/game-ui-update.md](docs/game-ui-update.md), [docs/language-and-trail.md](docs/language-and-trail.md). Catatan Sprint 1 bersifat historis; README ini menjelaskan perilaku terbaru.
+
+## Mengaktifkan AI generatif
+
+1. Masuk ke [OpenAI API Platform](https://platform.openai.com/api-keys) dengan akunmu. Buat project/API key dan pastikan ada kuota API aktif. Akun ChatGPT dapat memakai email yang sama, tetapi cookie/token login ChatGPT bukan API key. Paket Pro/Business yang memenuhi syarat dapat mengaktifkan manfaat [kredit API](https://developers.openai.com/api/docs/guides/chatgpt-api-credits).
+2. Salin `.env.example` menjadi `.env`, isi `OPENAI_API_KEY` secara lokal. Jangan kirim key lewat chat, jangan beri awalan `VITE_`, dan jangan commit `.env`. Model awal `gpt-4.1-mini` dapat diganti dengan model yang tersedia untuk projectmu dan mendukung Structured Outputs.
+3. Jalankan server AI dan frontend pada dua terminal:
+
+```powershell
+# Terminal 1
+npm run ai
+```
+
+```powershell
+# Terminal 2
+npm run dev
+```
+
+Buka http://localhost:5174. Pada materi, buka Tutor Qwi dan pilih **AI generatif**, atau gulir ke **Tantangan baru dari AI** untuk membuat tiga soal. Jika key belum diisi/server belum berjalan, mode lokal dan kuis utama tetap tersedia. Sesudah mengubah `.env`, mulai ulang server AI dan buka ulang panel/halaman.
+
+Untuk menjalankan hasil build dengan satu server lokal:
+
+```powershell
+npm run build
+npm start
+```
+
+Buka http://127.0.0.1:5075. Server melayani frontend hasil build sekaligus API. Server hanya mendengarkan loopback; integrasi ini belum ditujukan sebagai API publik tanpa autentikasi. Di komputer lain, `.env` harus diisi sendiri karena key tidak ikut GitHub.
+
+Latihan AI merupakan latihan bebas tanpa XP/unlock. Jawaban benar disimpan sementara di server dan baru dikirim pada hasil penilaian. Pemeriksaan format tidak menjamin kebenaran matematika; tetap perlu review konten. Percobaan kedaluwarsa setelah 20 menit atau ketika server dimulai ulang.
+
+Batas lokal awal: 100 permintaan model per hari UTC per proses, 20 per 10 menit, maksimum dua bersamaan. Batas proses hilang saat restart; tetapkan juga anggaran project di API Platform. Semua pengujian AI memakai provider tiruan tanpa biaya; API nyata dan pemeriksaan UI browser belum diverifikasi. Detail: [docs/ai-setup.md](docs/ai-setup.md).
