@@ -7,7 +7,6 @@ import { tutorReply, type HelpKind } from "./tutor";
 import { aiRequest, aiErrorMessage } from "../ai/client";
 import { useAiStatus } from "../ai/useAiStatus";
 import "../ai/ai.css";
-import { AiConnection } from "../ai/AiConnection";
 export function TutorPanel({
   unit,
   question,
@@ -147,7 +146,6 @@ export function TutorPanel({
             </p>
           </div>
         </div>
-        {!question && <AiConnection disabled={busy} />}
         <div className="ai-mode">
           <button
             aria-pressed={mode === "guide"}
@@ -175,8 +173,8 @@ export function TutorPanel({
                 )
               : !status?.ready
                 ? c(
-                    "Mode AI belum tersedia; panduan lokal tetap bisa dipakai.",
-                    "AI mode is not available yet; the local guide still works.",
+                    "Mode AI belum tersedia. Koneksi dapat dikelola di Pengaturan → Pengaturan lanjutan; panduan lokal tetap bisa dipakai.",
+                    "AI mode is not available yet. Manage the connection in Settings → Advanced settings; the local guide still works.",
                   )
                 : c(
                     "Tanya konsep atau minta contoh baru dalam bahasa pilihanmu.",

@@ -275,7 +275,6 @@ export function OverlayHost() {
             </>
           ) : (
             <>
-              <AiConnection />
               <div className="settings-heading">
                 <Sparkles />
                 <h3>{t("Preferensi petualangan")}</h3>
@@ -322,6 +321,12 @@ export function OverlayHost() {
                   )}
                 </p>
               </div>
+              <details className="advanced-settings">
+                <summary>
+                  {c("Pengaturan lanjutan", "Advanced settings")}
+                </summary>
+                <AiConnection />
+              </details>
               <button
                 className="secondary-button danger"
                 onClick={() => {

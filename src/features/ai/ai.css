@@ -312,3 +312,17 @@
   background: none;
   color: #7d5c96;
 }
+.advanced-settings {
+  margin: 20px 0;
+}
+.advanced-settings > summary {
+  cursor: pointer;
+  color: var(--muted, #80668f);
+  font-size: 0.9rem;
+  padding: 12px 0;
+}
+.advanced-settings > summary:focus-visible {
+  outline: 2px solid #8860ad;
+  outline-offset: 4px;
+  border-radius: 6px;
+}
