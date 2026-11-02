@@ -22,10 +22,10 @@ Build menghasilkan `dist/`. Hosting SPA membutuhkan fallback ke `index.html`. Gu
 
 ## Menjalankan di komputer lain melalui GitHub
 
-Pasang Git dan Node.js, kemudian ambil repository menggunakan URL GitHub proyek ini:
+Repository: [ihsannajam/qwizo](https://github.com/ihsannajam/qwizo) (private). Pasang Git dan Node.js, kemudian ambil proyek:
 
 ```powershell
-git clone <URL_REPOSITORY>
+git clone https://github.com/ihsannajam/qwizo.git
 cd qwizo
 npm ci
 npm run dev
